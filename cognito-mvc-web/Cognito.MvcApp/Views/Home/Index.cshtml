@@ -1,0 +1,27 @@
+﻿@{
+    ViewData["Title"] = "Home";
+}
+
+<div class="layout">
+    <div class="light-overlay">
+        <div class="home-content text-center">
+            <span class="fa-stack fa-2x">
+                <em class="fas fa-circle fa-stack-2x text-primary"></em>
+                <em class="fas fa-id-card fa-stack-1x fa-inverse"></em>
+            </span>
+            <h1 class="my-3 text-primary">
+                Cognito Mvc
+            </h1>
+            <p class="lead text-secondary">
+                An app to illustrate AWS Cognito integration
+            </p>
+            <hr class="home-hr my-5" />
+            <div class="form-group">
+                <a asp-controller="Signups" asp-action="Signup" class="btn btn-lg btn-success w-50">SIGNUP</a>
+            </div>
+            <div class="form-group">
+                <a asp-controller="Accounts" asp-action="SignIn" class="btn btn-lg btn-primary w-50">SIGNIN</a>
+            </div>
+        </div>
+    </div>
+</div>

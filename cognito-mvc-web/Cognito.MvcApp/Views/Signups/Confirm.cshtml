@@ -1,0 +1,53 @@
+@model SignupConfirmationViewModel
+
+@{
+    ViewData["Title"] = "Signup";
+}
+
+<div class="layout">
+    <div class="light-overlay">
+        <div class="signup-card">
+            <div class="card">
+                <div class="text-center mt-3">
+                    <span class="fa-stack fa-2x">
+                        <em class="fas fa-circle fa-stack-2x text-primary"></em>
+                        <em class="fas fa-user-plus fa-stack-1x fa-inverse"></em>
+                    </span>
+                    <div class="my-2 text-primary">
+                        <h3>SIGNUP CONFIRMATION</h3>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <form asp-controller="Signups" asp-action="Confirm" method="POST">
+                        <div asp-validation-summary="ModelOnly" class="text-danger small"></div>
+                        <!-- EMAIL -->
+                        <div class="form-group">
+                            <input asp-for="Email" type="text" name="Email" class="form-control" placeholder="Email" />
+                            <div>
+                                <span asp-validation-for="Email" class="text-danger small"></span>
+                            </div>
+                        </div>
+                        <!-- CODE -->
+                        <div class="form-group">
+                            <input asp-for="Code" type="text" name="Code" class="form-control" placeholder="Code" />
+                            <div>
+                                <span asp-validation-for="Code" class="text-danger small"></span>
+                            </div>
+                        </div>
+                        <!-- SIGNUP ACTION -->
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-lg btn-success btn-block">CONFIRM</button>
+                        </div>
+                        <div class="form-group">
+                            <a asp-controller="Home" asp-action="Index" class="btn btn-lg btn-secondary btn-block">CANCEL</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial");
+}

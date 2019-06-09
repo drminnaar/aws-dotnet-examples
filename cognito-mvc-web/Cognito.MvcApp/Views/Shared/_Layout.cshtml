@@ -1,0 +1,18 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Cognito Mvc</title>
+    @await Html.PartialAsync("_Styles")
+</head>
+<body>
+    <header></header>    
+    <main>
+        @RenderBody()
+    </main>
+    <footer></footer>    
+    @await Html.PartialAsync("_Scripts")
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

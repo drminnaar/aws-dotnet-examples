@@ -1,0 +1,21 @@
+{
+  "name": "cognito-mvc-web",
+  "version": "1.0.0",
+  "description": "",
+  "main": "site.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@fortawesome/fontawesome-free": "5.8.2",
+    "bootstrap": "4.3.1",
+    "jquery": "^3.4.1",
+    "jquery-validation": "1.17.0",
+    "jquery-validation-unobtrusive": "3.2.11",
+    "popper.js": "1.14.7"
+  },
+  "devDependencies": {}
+}

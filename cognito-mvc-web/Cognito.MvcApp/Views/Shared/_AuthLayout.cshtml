@@ -1,0 +1,56 @@
+@using Microsoft.AspNetCore.Identity
+@using Microsoft.AspNetCore.Identity.EntityFrameworkCore
+@using Amazon.Extensions.CognitoAuthentication
+
+@inject UserManager<CognitoUser> UserManager
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Cognito Mvc</title>
+    @await Html.PartialAsync("_Styles")
+</head>
+<body>
+    <header class="container">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">         
+            <a asp-controller="Notes" asp-action="Index" class="navbar-brand text-primary">
+            <em class="fa fa-book-open fa-2x mr-2 text-primary"></em>
+            COGNITO
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#menu">
+            <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="menu">
+            <form asp-controller="Accounts" asp-action="SignOut" class="my-2 ml-auto my-lg-0">                
+                    <ul class="navbar-nav">
+                        <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="accountDropdown" role="button" data-toggle="dropdown">
+                            <div class="d-inline d-lg-none">ACCOUNT</div>
+                            <div class="d-none d-lg-inline">
+                                <span class="fa-stack">
+                                <em class="fas fa-circle fa-stack-2x text-primary"></em>
+                                <em class="fas fa-user fa-stack-1x fa-inverse"></em>
+                                </span>
+                                @UserManager.GetUserName(User)
+                            </div>                                
+                        </a>
+                        <div class="dropdown-menu">
+                            <button type="submit" class="dropdown-item btn btn-link">Logout</button>
+                        </div>                        
+                        </li>
+                    </ul>
+            </form>
+            </div>
+        </nav>
+    </header>
+    <main class="container">
+        @RenderBody()
+    </main>
+    <footer></footer>    
+    @await Html.PartialAsync("_Scripts")
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

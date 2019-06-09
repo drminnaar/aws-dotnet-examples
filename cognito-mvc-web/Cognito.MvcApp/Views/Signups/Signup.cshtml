@@ -1,0 +1,67 @@
+@model SignupViewModel
+
+@{
+    ViewData["Title"] = "Signup";
+}
+
+<div class="layout">
+    <div class="light-overlay">
+        <div class="signup-card">
+            <div class="card">
+                <div class="text-center mt-3">
+                    <span class="fa-stack fa-2x">
+                        <em class="fas fa-circle fa-stack-2x text-primary"></em>
+                        <em class="fas fa-user-plus fa-stack-1x fa-inverse"></em>
+                    </span>
+                    <div class="my-2 text-primary">
+                        <h3>SIGNUP</h3>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <form asp-controller="Signups" asp-action="Signup" method="POST">
+                        <div asp-validation-summary="ModelOnly" class="text-danger small"></div>
+                        <!-- EMAIL -->
+                        <div class="form-group">
+                            <input asp-for="Email" type="text" name="Email" class="form-control" placeholder="Email" />
+                            <div>
+                                <span asp-validation-for="Email" class="text-danger small"></span>
+                            </div>
+                        </div>
+                        <!-- NAME -->
+                        <div class="form-group">
+                            <input asp-for="Name" type="text" name="Name" class="form-control" placeholder="Name" />
+                            <div>
+                                <span asp-validation-for="Name" class="text-danger small"></span>
+                            </div>
+                        </div>
+                        <!-- PASSWORD -->
+                        <div class="form-group">
+                            <input asp-for="Password" type="password" name="Password" class="form-control" placeholder="Password">
+                            <div>
+                                <span asp-validation-for="Password" class="text-danger small"></span>
+                            </div>
+                        </div>
+                        <!-- CONFIRMATION PASSWORD -->
+                        <div class="form-group">
+                            <input asp-for="PasswordConfirmation" type="password" name="passwordConfirmation" class="form-control" placeholder="Confirm Password">
+                            <div>
+                                <span asp-validation-for="PasswordConfirmation" class="text-danger small"></span>
+                            </div>
+                        </div>
+                        <!-- SIGNUP ACTION -->
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-lg btn-success btn-block">SIGNUP</button>
+                        </div>
+                        <div class="form-group">
+                            <a asp-controller="Home" asp-action="Index" class="btn btn-lg btn-secondary btn-block">CANCEL</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial");
+}

@@ -1,0 +1,13 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using Amazon.Extensions.CognitoAuthentication
+
+@inject SignInManager<CognitoUser> SignInManager
+
+@if (SignInManager.IsSignedIn(User))
+{
+   Layout = "_AuthLayout";
+}
+else
+{
+   Layout = "_Layout";
+}

@@ -1,0 +1,58 @@
+@model SignInViewModel
+
+@{
+    ViewData["Title"] = "Signin";
+}
+
+<div class="layout">
+    <div class="light-overlay">
+        <div class="login-card">
+            <div class="card">
+                <div class="text-center mt-3">
+                    <span class="fa-stack fa-2x">
+                        <em class="fas fa-circle fa-stack-2x text-primary"></em>
+                        <em class="fas fa-user-lock fa-stack-1x fa-inverse"></em>
+                    </span>
+                    <div class="my-2 text-primary">
+                        <h3>SIGNIN</h3>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <form asp-controller="Account" asp-action="SignIn" method="post">
+                        <!-- VALIDATION MESSAGES -->
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <!-- EMAIL -->
+                        <div class="form-group">
+                           <input asp-for="Email" type="text" name="Email" class="form-control" placeholder="Email" />
+                            <div>
+                                <span asp-validation-for="Email" class="text-danger small"></span>
+                            </div>
+                        </div>
+                        <!-- PASSWORD -->
+                        <div class="form-group">
+                            <input asp-for="Password" type="password" name="Password" class="form-control" placeholder="Password" />
+                            <div>
+                                <span asp-validation-for="Password" class="text-danger small"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary btn-block">SIGNIN</button>
+                        </div>
+                        <div class="form-group">
+                            <a asp-controller="Home" asp-action="Index" class="btn btn-secondary btn-block">CANCEL</a>
+                        </div>
+                    </form>
+                </div>
+                <div class="card-footer text-muted">
+                    <span>Not Registered?</span>
+                     <a asp-controller="Signups" asp-action="Signup">Signup here!</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/node_modules/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/node_modules/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.min.js"></script>
+}
