@@ -5,8 +5,52 @@ A collection of independent dotnet core projects written in C# that demonstrate 
 ## Projects
 
 * [Cognito Mvc] - This project demonstrates how to integrate an ASP.NET Core MVC web application with Amazon Cognito using the Amazon SDK.
+
+    The following features have been implemented:
+
+    * Signup for a new account
+    * Confirm Signup (using confirmation code)
+    * Sign into account
+    * Sign out of account
+
 * [S3 ConsoleApp] - This project demonstrates how to integrate a .NET Core Console application with Amazon S3 using the Amazon SDK.
-* [DynamoDb ConsoleApp] - This project demonstrates how to integrate a .NET Core console application with DynamoDb using the Amazon SDK.
+    
+    The following features have been implemented:
+
+    * List all S3 buckets
+    * Create new S3 bucket
+    * Delete S3 bucket
+
+* [DynamoDb ConsoleApp] - This project demonstrates how to integrate a .NET Core console application with DynamoDb using the Amazon SDK. This application provides the functionality required to both manage DynamoDb tables, and manage the data stored in a DynamoDB table
+
+    The following features have been implemented:
+
+    * Manage Tables
+        * Create table
+        * List and find tables
+        * Wait for tables to be described (eventually consistent)
+        * Delete table
+    * Manage Book Table Data
+        * Automatically creates Book table
+        * Add books to Book table
+        * Update books in Book table
+        * Delete books from Book table
+        * List and find books in Book table
+
+* [SNS ConsoleApp] - This project demonstrates how to integrate a .NET Core console application with SNS using the Amazon SDK. This application provides the functionality required to manage SNS topcs, subscriptions, and publications.
+
+    The following features have been implemented:
+
+    * Manage Topics
+        * Create topic
+        * List and find topics  
+        * Delete topic
+    * Manage Subscriptions
+        * Create an email subscription
+        * Cancel a subscription
+        * List subscriptions
+    * Manage Publications
+        * An example showing how to publish a 'Game Ranking' to a 'game-ranking' topic
 
 ## Versioning
 
@@ -19,3 +63,4 @@ I use [SemVer](http://semver.org/) for versioning. For the versions available, s
 [Cognito Mvc]: https://github.com/drminnaar/aws-dotnetcore-examples/tree/master/
 [S3 ConsoleApp]: https://github.com/drminnaar/aws-dotnetcore-examples/tree/master/s3-console
 [DynamoDb ConsoleApp]: https://github.com/drminnaar/aws-dotnetcore-examples/tree/master/dynamodb-console
+[SNS ConsoleApp]: https://github.com/drminnaar/aws-dotnetcore-examples/tree/master/sns-console
