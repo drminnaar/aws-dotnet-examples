@@ -10,7 +10,7 @@ This project demonstrates how to integrate a .NET Core console application with 
 
 ## Features
 
-This application provides the functionality required to both manage SNS topcs, subscriptions, and publications.
+This application provides the functionality required to manage SNS topics, subscriptions, and publications.
 
 The following features have been implemented:
 
