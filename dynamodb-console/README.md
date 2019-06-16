@@ -10,7 +10,7 @@ This project demonstrates how to integrate a .NET Core console application with 
 
 ## Features
 
-So what can you do with this application? This application provides the functionality required to both manage DynamoDb tables, and manage the data stored in a DynamoDB table
+This application provides the functionality required to both manage DynamoDb tables, and manage the data stored in a DynamoDB table
 
 The following features have been implemented:
 
