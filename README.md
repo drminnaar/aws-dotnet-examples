@@ -52,6 +52,19 @@ A collection of independent dotnet core projects written in C# that demonstrate 
     * Manage Publications
         * An example showing how to publish a 'Game Ranking' to a 'game-ranking' topic
 
+* [SQS ConsoleApp] - This project demonstrates how to integrate a .NET Core console application with SQS using the Amazon SDK.
+
+    The following features have been implemented:
+
+    * Manage Queues
+        * Create queue
+        * List queues
+        * Delete queue
+        * Get queue url
+    * Manage Game Ranking Queue
+        * Enqueue game ranking to queue
+        * Dequeue game rankings from queue
+
 ## Versioning
 
 I use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/drminnaar/aws-dotnetcore-examples/tags).
@@ -64,3 +77,4 @@ I use [SemVer](http://semver.org/) for versioning. For the versions available, s
 [S3 ConsoleApp]: https://github.com/drminnaar/aws-dotnetcore-examples/tree/master/s3-console
 [DynamoDb ConsoleApp]: https://github.com/drminnaar/aws-dotnetcore-examples/tree/master/dynamodb-console
 [SNS ConsoleApp]: https://github.com/drminnaar/aws-dotnetcore-examples/tree/master/sns-console
+[SQS ConsoleApp]: https://github.com/drminnaar/aws-dotnetcore-examples/tree/master/sqs-console
