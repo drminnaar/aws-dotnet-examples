@@ -1,0 +1,23 @@
+### Create signup using invalid details
+
+POST http://localhost:5000/api/signups
+User-Agent: rest-client
+Content-Type: application/json
+
+{
+    "Email": "xxx",
+    "Password": "yyy",
+    "ConfirmedPassword": "zzz"
+}
+
+### Create signup using valid details
+
+POST http://localhost:5000/api/signups
+User-Agent: rest-client
+Content-Type: application/json
+
+{
+    "Email": "<<enter_your_email_address_here",
+    "Password": "<<enter_your_password_here>>",
+    "ConfirmedPassword": "<<enter_your_password_here>>"
+}

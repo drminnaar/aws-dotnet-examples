@@ -1,0 +1,12 @@
+### Get 'Values' from unauthorized endpoint
+
+GET http://localhost:5000/api/values
+
+### Get 'Value' from authorized endpoint without token
+
+GET http://localhost:5000/api/values/178
+
+### Get 'Value' from authorized endpoint with token
+
+GET http://localhost:5000/api/values/178
+Authorization: Bearer <<enter_your_token_here>>

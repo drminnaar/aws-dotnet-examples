@@ -1,0 +1,21 @@
+### Get token using invalid credentials
+
+POST http://localhost:5000/api/tokens
+User-Agent: rest-client
+Content-Type: application/json
+
+{
+    "Email": "xxx",
+    "Password": "yyy",
+}
+
+### Get Token using valid credentials
+
+POST http://localhost:5000/api/tokens
+User-Agent: rest-client
+Content-Type: application/json
+
+{
+    "Email": "<<enter_your_email_address_here",
+    "Password": "<<enter_your_password_here>>"
+}
