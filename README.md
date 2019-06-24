@@ -13,6 +13,18 @@ A collection of independent dotnet core projects written in C# that demonstrate 
     * Sign into account
     * Sign out of account
 
+* [Cognito Api] - This project demonstrates how to integrate a .NET Core Web Api application with Amazon Cognito using the Amazon SDK.
+
+  This Web Api application provides the following endpoints:
+
+  * Signups
+    * POST api/signups - Allows an api consumer to signup for a new account
+  * Tokens
+    * POST api/tokens - Provides JWT access token for valid account credentials
+  * Values
+    * GET api/values - An unauthorized endpoint that returns a list of values
+    * GET api/values/123 - An authorized endpoint (Requires JWT access token) that returns a single value
+
 * [S3 ConsoleApp] - This project demonstrates how to integrate a .NET Core Console application with Amazon S3 using the Amazon SDK.
     
     The following features have been implemented:
@@ -73,7 +85,8 @@ I use [SemVer](http://semver.org/) for versioning. For the versions available, s
 
 * **Douglas Minnaar** - *Initial work* - [drminnaar](https://github.com/drminnaar)
 
-[Cognito Mvc]: https://github.com/drminnaar/aws-dotnetcore-examples/tree/master/
+[Cognito Mvc]: https://github.com/drminnaar/aws-dotnetcore-examples/tree/master/cognito-mvc-web
+[Cognito Api]: https://github.com/drminnaar/aws-dotnetcore-examples/tree/master/cognito-mvc-api
 [S3 ConsoleApp]: https://github.com/drminnaar/aws-dotnetcore-examples/tree/master/s3-console
 [DynamoDb ConsoleApp]: https://github.com/drminnaar/aws-dotnetcore-examples/tree/master/dynamodb-console
 [SNS ConsoleApp]: https://github.com/drminnaar/aws-dotnetcore-examples/tree/master/sns-console
