@@ -1,8 +1,8 @@
 using Amazon.DynamoDBv2;
 using DynamoDb.ConsoleApp.Consoles;
-using DynamoDb.ConsoleApp.Managers.Books;
-using DynamoDb.ConsoleApp.Managers.Tables;
 using DynamoDb.ConsoleApp.Repositories;
+using DynamoDb.ConsoleApp.Repositories.Models;
+using DynamoDb.ConsoleApp.Services.Books;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -22,12 +22,12 @@ namespace DynamoDb.ConsoleApp.DependencyInjection
             services.AddAWSService<IAmazonDynamoDB>();
 
             // Add repositories
-            services.AddSingleton<IEntityRepository<Book>, EntityRepository<Book>>();
+            services.AddSingleton<IEntityRepository<BookEntity>, EntityRepository<BookEntity>>();
             services.AddSingleton<ITableRepository, TableRepository>();
 
-            // Add managers
-            services.AddSingleton<IDynamoDbTableManager, DynamoDbTableManager>();
-            services.AddSingleton<IBookManager, BookManager>();
+            // Add book related services
+            services.AddSingleton<IBooksManager, BooksManager>();
+            services.AddSingleton<IBooksTableManager, BooksTableManager>();
 
             // Add consoles
             services.AddSingleton<DashboardConsole>();

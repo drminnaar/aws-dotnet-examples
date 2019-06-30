@@ -7,7 +7,7 @@ using Amazon.DynamoDBv2.DataModel;
 
 namespace DynamoDb.ConsoleApp.Repositories
 {
-    public sealed class EntityRepository<T> : IEntityRepository<T> where T : EntityBase
+    public sealed class EntityRepository<T> : IEntityRepository<T> where T : class
     {
         private readonly IAmazonDynamoDB _dynamoDb;
 
@@ -16,18 +16,18 @@ namespace DynamoDb.ConsoleApp.Repositories
             _dynamoDb = dynamoDb ?? throw new ArgumentNullException(nameof(dynamoDb));
         }
 
-        public async Task DeleteEntityAsync(Guid entityId)
+        public async Task DeleteAsync(object hashKey)
         {
             using (var context = new DynamoDBContext(_dynamoDb))
             {
-                await context.DeleteAsync<T>(hashKey: entityId);
+                await context.DeleteAsync<T>(hashKey: hashKey);
             }
         }
 
-        public async Task<IReadOnlyList<T>> GetAllEntitiesAsync()
+        public async Task<IReadOnlyList<T>> GetAllAsync()
         {
             using (var context = new DynamoDBContext(_dynamoDb))
-            {
+            {                
                 return await context
                     .ScanAsync<T>(Enumerable.Empty<ScanCondition>())
                     .GetRemainingAsync()
@@ -35,29 +35,27 @@ namespace DynamoDb.ConsoleApp.Repositories
             }
         }
 
-        public async Task<T> GetEntityByIdAsync(Guid entityId)
+        public async Task<T> GetAsync(object hashKey)
         {
             using (var context = new DynamoDBContext(_dynamoDb))
             {
-                return await context.LoadAsync<T>(entityId);
+                return await context.LoadAsync<T>(hashKey);
             }
         }
 
-        public Task<Guid> SaveEntityAsync(T entity)
+        public Task SaveAsync(T entity)
         {
             if (entity is null)
                 throw new ArgumentNullException(nameof(entity));
 
             return saveEntityAsync();
 
-            async Task<Guid> saveEntityAsync()
+            async Task saveEntityAsync()
             {
                 using (var context = new DynamoDBContext(_dynamoDb))
                 {
                     await context.SaveAsync(entity);
                 }
-
-                return entity.Id;
             }
         }
     }

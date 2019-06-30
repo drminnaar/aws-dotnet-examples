@@ -1,23 +1,20 @@
-
-
 using System;
 using System.Text;
 using System.Threading.Tasks;
-using DynamoDb.ConsoleApp.Managers.Books;
+using DynamoDb.ConsoleApp.Services.Books;
 using Newtonsoft.Json;
 
 namespace DynamoDb.ConsoleApp.Consoles
 {
-    public sealed class BookManagerConsole
+    public sealed class BookManagerConsole : ConsoleBase
     {
-        private readonly IBookManager _bookManager;
+        private readonly IBooksManager _booksManager;
         private const ConsoleColor DefaultForegroundColor = ConsoleColor.White;
-        private const ConsoleColor ForegroundColor = ConsoleColor.Green;
-        private const ConsoleColor ErrorForegroundColor = ConsoleColor.DarkRed;
+        private const ConsoleColor ForegroundColor = ConsoleColor.Magenta;
 
-        public BookManagerConsole(IBookManager bookManager)
+        public BookManagerConsole(IBooksManager booksManager)
         {
-            _bookManager = bookManager ?? throw new ArgumentNullException(nameof(bookManager));
+            _booksManager = booksManager ?? throw new ArgumentNullException(nameof(booksManager));
         }
 
         public async Task DisplayAsync()
@@ -25,28 +22,26 @@ namespace DynamoDb.ConsoleApp.Consoles
             Console.ForegroundColor = ForegroundColor;
             do
             {
-                Console.WriteLine(GetMenu());
-                var selection = Console.ReadLine();
+                var selection = Prompt(GetMenu());
 
-                if (selection == "0")
-                    break;
+                if (selection == "0") break;
 
                 switch (selection)
                 {
                     case "1":
-                        await GetAllBooksAsync();
+                        await ExecuteMenuActionAsync(GetAllBooksAsync);
                         break;
                     case "2":
-                        await GetBookAsync();
+                        await ExecuteMenuActionAsync(GetBookAsync);
                         break;
                     case "3":
-                        await AddBookAsync();
+                        await ExecuteMenuActionAsync(AddBookAsync);
                         break;
                     case "4":
-                        await UpdateBookAsync();
+                        await ExecuteMenuActionAsync(UpdateBookAsync);
                         break;
                     case "5":
-                        await DeleteBookAsync();
+                        await ExecuteMenuActionAsync(DeleteBookAsync);
                         break;
                     default:
                         Console.ForegroundColor = ConsoleColor.Red;
@@ -61,109 +56,59 @@ namespace DynamoDb.ConsoleApp.Consoles
 
         private async Task GetAllBooksAsync()
         {
-            try
-            {
-                var books = await _bookManager.GetAllBooksAsync();
-                Console.ForegroundColor = ConsoleColor.DarkGreen;
-                Console.WriteLine(JsonConvert.SerializeObject(books, Formatting.Indented));
-                Console.ForegroundColor = ForegroundColor;
-            }
-            catch (Exception e)
-            {
-                Console.ForegroundColor = ErrorForegroundColor;
-                Console.WriteLine(e);
-                Console.ForegroundColor = ForegroundColor;
-            }
+            var books = await _booksManager.GetAllBooksAsync();
+
+            Console.ForegroundColor = ConsoleColor.DarkGreen;
+            Console.WriteLine();
+            Console.WriteLine(JsonConvert.SerializeObject(books, Formatting.Indented));
+            Console.ForegroundColor = ForegroundColor;
         }
 
         private async Task GetBookAsync()
         {
-            Console.Write("Enter book id: ");
-            var bookIdFromConsole = Console.ReadLine();
+            var bookId = Guid.Parse(Prompt("Enter book id: "));
+            var book = await _booksManager.GetBookAsync(bookId);
 
-            try
-            {
-                var bookId = Guid.Parse(bookIdFromConsole);
-                var book = await _bookManager.GetBookAsync(bookId);
-                Console.ForegroundColor = ConsoleColor.DarkGreen;
-                Console.WriteLine(JsonConvert.SerializeObject(book, Formatting.Indented));
-                Console.ForegroundColor = ForegroundColor;
-            }
-            catch (Exception e)
-            {
-                Console.ForegroundColor = ErrorForegroundColor;
-                Console.WriteLine(e);
-                Console.ForegroundColor = ForegroundColor;
-            }
-        }
+            Console.ForegroundColor = ConsoleColor.DarkGreen;
+            Console.WriteLine();
+            Console.WriteLine(JsonConvert.SerializeObject(book, Formatting.Indented));
+            Console.ForegroundColor = ForegroundColor;
+        }        
 
         private async Task AddBookAsync()
         {
-            var book = new Book();
+            var bookForCreate = new BookForCreate();
+            bookForCreate.Title = Prompt("Enter book title: ");
+            bookForCreate.Description = Prompt("Enter book description: ");
 
-            Console.WriteLine("Enter book title: ");
-            book.Title = Console.ReadLine();
+            await _booksManager.AddBookAsync(bookForCreate);
 
-            Console.WriteLine("Enter book description: ");
-            book.Description = Console.ReadLine();
-
-            try
-            {
-                var bookId = await _bookManager.AddBookAsync(book);
-                Console.WriteLine($"Added new book successfully. New book id: {bookId}");
-            }
-            catch (Exception e)
-            {
-                Console.ForegroundColor = ErrorForegroundColor;
-                Console.WriteLine(e);
-                Console.ForegroundColor = ForegroundColor;
-            }
+            Console.WriteLine();
+            Console.WriteLine($"Added new book '{bookForCreate.Title}' successfully");
         }
 
         private async Task UpdateBookAsync()
-        {
-            Console.Write("Enter book id: ");
-            var bookIdFromConsole = Console.ReadLine();
+        {            
+            var bookId = Guid.Parse(Prompt("Enter book id: "));
 
-            var bookUpdate = new BookUpdate();
+            var bookForUpdate = new BookForUpdate();
+            bookForUpdate.Title = Prompt("Enter book title: ");
+            bookForUpdate.Description = Prompt("Enter book description: ");            
 
-            Console.WriteLine("Enter book title: ");
-            bookUpdate.Title = Console.ReadLine();
+            await _booksManager.UpdateBookAsync(bookId, bookForUpdate);
 
-            Console.WriteLine("Enter book description: ");
-            bookUpdate.Description = Console.ReadLine();
-
-            try
-            {
-                var bookId = Guid.Parse(bookIdFromConsole);
-                await _bookManager.UpdateBookAsync(bookId, bookUpdate);
-                Console.WriteLine($"Book having id '{bookId}' updated succesfully.");
-            }
-            catch (Exception e)
-            {
-                Console.ForegroundColor = ErrorForegroundColor;
-                Console.WriteLine(e);
-                Console.ForegroundColor = ForegroundColor;
-            }
+            Console.WriteLine();
+            Console.WriteLine($"Book having id '{bookId}' updated succesfully.");
         }
 
         private async Task DeleteBookAsync()
         {
-            Console.Write("Enter book id: ");
-            var bookIdFromConsole = Console.ReadLine();
+            var bookId = Guid.Parse(Prompt("Enter book id: "));
 
-            try
-            {
-                var bookId = Guid.Parse(bookIdFromConsole);
-                await _bookManager.DeleteBookAsync(bookId);
-                Console.WriteLine($"Book having id '{bookId}' was deleted successfully.");
-            }
-            catch (Exception e)
-            {
-                Console.ForegroundColor = ErrorForegroundColor;
-                Console.WriteLine(e);
-                Console.ForegroundColor = ForegroundColor;
-            }
+            await _booksManager.DeleteBookAsync(bookId);
+
+            Console.WriteLine();
+            Console.WriteLine($"Book having id '{bookId}' was deleted successfully.");
         }
 
         private static string GetMenu()
@@ -175,7 +120,8 @@ namespace DynamoDb.ConsoleApp.Consoles
             menu.Append("2 - Get book by id".PadRight(30, ' '));
             menu.AppendLine("3 - Add book");
             menu.Append("4 - Update book".PadRight(30, ' '));
-            menu.Append("5 - Delete book");
+            menu.AppendLine("5 - Delete book");
+            menu.AppendLine();
             return menu.ToString();
         }
     }

@@ -1,6 +1,6 @@
-namespace DynamoDb.ConsoleApp.Managers.Books
+namespace DynamoDb.ConsoleApp.Services.Books
 {
-    public sealed class BookUpdate
+    public sealed class BookForUpdate
     {
         public string Title { get; set; }
         public string Description { get; set; }

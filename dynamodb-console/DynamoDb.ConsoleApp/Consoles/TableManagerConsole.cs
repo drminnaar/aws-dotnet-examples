@@ -1,72 +1,144 @@
 using System;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using DynamoDb.ConsoleApp.Managers.Tables;
+using DynamoDb.ConsoleApp.Repositories;
+using DynamoDb.ConsoleApp.Services.Books;
 using Newtonsoft.Json;
 
 namespace DynamoDb.ConsoleApp.Consoles
 {
-    public sealed class TableManagerConsole
+    public sealed class TableManagerConsole : ConsoleBase
     {
-        private readonly IDynamoDbTableManager _dynamoDbService;
+        private readonly ITableRepository _tableRepository;
+        private readonly IBooksTableManager _booksTableManager;
         private const ConsoleColor DefaultForegroundColor = ConsoleColor.White;
         private const ConsoleColor ForegroundColor = ConsoleColor.Cyan;
 
-        public TableManagerConsole(IDynamoDbTableManager dynamoDbService)
+        public TableManagerConsole(ITableRepository tableRepository, IBooksTableManager booksTableManager)
         {
-            _dynamoDbService = dynamoDbService ?? throw new ArgumentNullException(nameof(dynamoDbService));
+            _tableRepository = tableRepository ?? throw new ArgumentNullException(nameof(tableRepository));
+            _booksTableManager = booksTableManager ?? throw new ArgumentNullException(nameof(booksTableManager));
         }
 
         public async Task DisplayAsync()
         {
             Console.ForegroundColor = ForegroundColor;
-
             do
             {
-                Console.WriteLine(GetMenu());
-                var selection = Console.ReadLine();
+                var selection = Prompt(GetMenu());
 
-                if (selection == "0")
-                    break;
+                if (selection == "0") break;
 
-                if (selection == "1")
+                switch (selection)
                 {
-                    var tables = await _dynamoDbService.GatAllTablesAsync();
-                    Console.WriteLine(JsonConvert.SerializeObject(tables));
-                }
-                else if (selection == "2")
-                {
-                    Console.Write("Enter table name: ");
-                    var tableName = Console.ReadLine();
-                    var table = await _dynamoDbService.GetTableAsync(tableName);
-                    if (table != null)
-                        Console.WriteLine(JsonConvert.SerializeObject(table, Formatting.Indented));
-                }
-                else if (selection == "3")
-                {
-                    Console.Write("Enter table name: ");
-                    var tableName = Console.ReadLine();
-                    var exists = await _dynamoDbService.ExistsAsync(tableName);
-                    Console.WriteLine($"Exists? {exists}");
-                }
-                else if (selection == "4")
-                {
-                    Console.Write("Enter table name: ");
-                    var tableName = Console.ReadLine();
-                    await _dynamoDbService.CreateTableAsync(tableName);
-                    Console.WriteLine($"Created table '{tableName}'");
-
-                }
-                else if (selection == "5")
-                {
-                    Console.Write("Enter table name: ");
-                    var tableName = Console.ReadLine();
-                    await _dynamoDbService.DeleteTableAsync(tableName);
-                    Console.WriteLine($"Deleted table '{tableName}'");
+                    case "1":
+                        await ExecuteMenuActionAsync(GetAllTableNamesAsync);
+                        break;
+                    case "2":
+                        await ExecuteMenuActionAsync(DescribeTableAsync);
+                        break;
+                    case "3":
+                        await ExecuteMenuActionAsync(DescribeAllTablesAsync);
+                        break;
+                    case "4":
+                        await ExecuteMenuActionAsync(DeleteTableAsync);
+                        break;
+                    case "5":
+                        await ExecuteMenuActionAsync(CreateTableAndWaitAsync);
+                        break;
+                    case "6":
+                        await ExecuteMenuActionAsync(DescribeBooksTableAsync);
+                        break;
+                    case "7":
+                        await ExecuteMenuActionAsync(DeleteBooksTableAsync);
+                        break;
+                    default:
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine("Invalid selection. Try again.");
+                        Console.ForegroundColor = ForegroundColor;
+                        break;
                 }
             } while (true);
 
             Console.ForegroundColor = DefaultForegroundColor;
+        }
+
+        private async Task GetAllTableNamesAsync()
+        {
+            var tableNames = await _tableRepository.GetTableNameListAsync();
+
+            Console.WriteLine();
+            Console.ForegroundColor = ConsoleColor.DarkGreen;
+            foreach (var tableName in tableNames)
+                Console.WriteLine(tableName);
+            Console.ForegroundColor = ForegroundColor;
+        }
+
+        private async Task DescribeTableAsync()
+        {
+            var tableName = Prompt("Enter table name: ");
+            var tableDescription = await _tableRepository.DescribeTableAsync(tableName);
+
+            Console.WriteLine();
+            Console.ForegroundColor = ConsoleColor.DarkGreen;
+            Console.WriteLine(JsonConvert.SerializeObject(tableDescription, Formatting.Indented));
+            Console.ForegroundColor = ForegroundColor;
+        }
+
+        private async Task DescribeAllTablesAsync()
+        {
+            var tableNames = (await _tableRepository.GetTableNameListAsync()).ToArray();
+            var tableDescriptions = await _tableRepository.DescribeTablesAsync(tableNames);
+
+            Console.WriteLine();
+            Console.ForegroundColor = ConsoleColor.DarkGreen;
+            Console.WriteLine(JsonConvert.SerializeObject(tableDescriptions, Formatting.Indented));
+            Console.ForegroundColor = ForegroundColor;
+        }
+
+        private async Task DeleteTableAsync()
+        {
+            var tableName = Prompt("Enter name of table to delete: ");
+
+            await _tableRepository.DeleteTableAsync(tableName);
+
+            Console.WriteLine();
+            Console.ForegroundColor = ConsoleColor.DarkGreen;
+            Console.WriteLine($"Deleted table '{tableName}'.");
+            Console.ForegroundColor = ForegroundColor;
+        }
+
+        private async Task CreateTableAndWaitAsync()
+        {
+            await _booksTableManager.CreateBooksTableAsync();
+            await _booksTableManager.WaitUntilBooksTableReadyAsync();
+            var table = await _booksTableManager.DescribeBooksTableAsync();
+
+            Console.WriteLine();
+            Console.ForegroundColor = ConsoleColor.DarkGreen;
+            Console.WriteLine(JsonConvert.SerializeObject(table, Formatting.Indented));
+            Console.ForegroundColor = ForegroundColor;
+        }
+
+        private async Task DescribeBooksTableAsync()
+        {
+            var table = await _booksTableManager.DescribeBooksTableAsync();
+
+            Console.WriteLine();
+            Console.ForegroundColor = ConsoleColor.DarkGreen;
+            Console.WriteLine(JsonConvert.SerializeObject(table, Formatting.Indented));
+            Console.ForegroundColor = ForegroundColor;
+        }
+
+        private async Task DeleteBooksTableAsync()
+        {
+            var table = await _booksTableManager.DescribeBooksTableAsync();
+
+            Console.WriteLine();
+            Console.ForegroundColor = ConsoleColor.DarkGreen;
+            Console.WriteLine(JsonConvert.SerializeObject(table, Formatting.Indented));
+            Console.ForegroundColor = ForegroundColor;
         }
 
         private static string GetMenu()
@@ -74,11 +146,14 @@ namespace DynamoDb.ConsoleApp.Consoles
             var menu = new StringBuilder();
             menu.AppendLine();
             menu.Append("0 - Back".PadRight(30, ' '));
-            menu.AppendLine("1 - List tables");
-            menu.Append("2 - Get table".PadRight(30, ' '));
-            menu.AppendLine("3 - Exists table");
-            menu.Append("4 - Create table".PadRight(30, ' '));
-            menu.AppendLine("5 - Delete table");
+            menu.AppendLine("1 - List all table names");
+            menu.Append("2 - Describe single table".PadRight(30, ' '));
+            menu.AppendLine("3 - Describe all tables");
+            menu.Append("4 - Delete table".PadRight(30, ' '));
+            menu.AppendLine("5 - Create 'Books' table");
+            menu.Append("6 - Describe 'Books' table".PadRight(30, ' '));
+            menu.AppendLine("7 - Delete 'Books' table");
+            menu.AppendLine();
             return menu.ToString();
         }
     }

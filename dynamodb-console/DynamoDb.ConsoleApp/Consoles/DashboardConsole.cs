@@ -1,26 +1,23 @@
 using System;
 using System.Text;
 using System.Threading.Tasks;
-using DynamoDb.ConsoleApp.Managers.Tables;
+using DynamoDb.ConsoleApp.Repositories;
 using Microsoft.Extensions.Logging;
 
 namespace DynamoDb.ConsoleApp.Consoles
 {
     public sealed class DashboardConsole
     {
-        private readonly IDynamoDbTableManager _tableManager;
         private readonly TableManagerConsole _tableManagerConsole;
         private readonly BookManagerConsole _bookManagerConsole;
         private readonly ILogger<DashboardConsole> _logger;
         private const ConsoleColor DefaultForegroundColor = ConsoleColor.White;
 
         public DashboardConsole(
-            IDynamoDbTableManager tableManager,
             TableManagerConsole tableManagerConsole,
             BookManagerConsole bookManagerConsole,
             ILogger<DashboardConsole> logger)
         {
-            _tableManager = tableManager ?? throw new ArgumentNullException(nameof(tableManager));
             _tableManagerConsole = tableManagerConsole ?? throw new ArgumentNullException(nameof(tableManagerConsole));
             _bookManagerConsole = bookManagerConsole ?? throw new ArgumentNullException(nameof(bookManagerConsole));
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
@@ -35,12 +32,12 @@ namespace DynamoDb.ConsoleApp.Consoles
         private static void DisplayTitle()
         {
             Console.ForegroundColor = ConsoleColor.DarkYellow;
-            Console.WriteLine(@"    ___        ______    ____                                    ____  _       ____                       ");
-            Console.WriteLine(@"   / \ \      / / ___|  |  _ \ _   _ _ __   __ _ _ __ ___   ___ |  _ \| |__   |  _ \  ___ _ __ ___   ___  ");
-            Console.WriteLine(@"  / _ \ \ /\ / /\___ \  | | | | | | | '_ \ / _` | '_ ` _ \ / _ \| | | | '_ \  | | | |/ _ \ '_ ` _ \ / _ \ ");
-            Console.WriteLine(@" / ___ \ V  V /  ___) | | |_| | |_| | | | | (_| | | | | | | (_) | |_| | |_) | | |_| |  __/ | | | | | (_) |");
-            Console.WriteLine(@"/_/   \_\_/\_/  |____/  |____/ \__, |_| |_|\__,_|_| |_| |_|\___/|____/|_.__/  |____/ \___|_| |_| |_|\___/ ");
-            Console.WriteLine(@"                               |___/                                                                      ");
+            Console.WriteLine(@" ____                                    ____  _       ____                       ");
+            Console.WriteLine(@"|  _ \ _   _ _ __   __ _ _ __ ___   ___ |  _ \| |__   |  _ \  ___ _ __ ___   ___  ");
+            Console.WriteLine(@"| | | | | | | '_ \ / _` | '_ ` _ \ / _ \| | | | '_ \  | | | |/ _ \ '_ ` _ \ / _ \ ");
+            Console.WriteLine(@"| |_| | |_| | | | | (_| | | | | | | (_) | |_| | |_) | | |_| |  __/ | | | | | (_) |");
+            Console.WriteLine(@"|____/ \__, |_| |_|\__,_|_| |_| |_|\___/|____/|_.__/  |____/ \___|_| |_| |_|\___/ ");
+            Console.WriteLine(@"       |___/                                                                      ");
             Console.ForegroundColor = DefaultForegroundColor;
         }
 
@@ -60,12 +57,6 @@ namespace DynamoDb.ConsoleApp.Consoles
                         await _tableManagerConsole.DisplayAsync();
                         break;
                     case "2":
-                        const string TableName = "Books";
-                        if (!await _tableManager.ExistsAsync(TableName))
-                        {
-                            _logger.LogInformation($"Creating '{TableName}' table ...");
-                            await _tableManager.CreateTableAndWaitUntilTableReadyAsync(TableName);
-                        }
                         await _bookManagerConsole.DisplayAsync();
                         break;
                     default:
@@ -83,7 +74,7 @@ namespace DynamoDb.ConsoleApp.Consoles
             menu.AppendLine();
             menu.AppendLine("0 - Quit");
             menu.AppendLine("1 - Manage Tables");
-            menu.AppendLine("2 - Manage Table Data");
+            menu.AppendLine("2 - Manage Book Data");
             return menu.ToString();
         }         
     }

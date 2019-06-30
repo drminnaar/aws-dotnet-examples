@@ -9,14 +9,18 @@ namespace DynamoDb.ConsoleApp.Repositories
 {
     public sealed class TableRepository : ITableRepository
     {
-        private readonly IAmazonDynamoDB _amazonDb;
+        private readonly IAmazonDynamoDB _dynamoDb;
 
         public TableRepository(IAmazonDynamoDB amazonDb)
         {
-            _amazonDb = amazonDb ?? throw new ArgumentNullException(nameof(amazonDb));
+            _dynamoDb = amazonDb ?? throw new ArgumentNullException(nameof(amazonDb));
         }
 
-        public Task CreateTableAsync(string tableName)
+        public Task CreateTableAsync(
+            string tableName,
+            IReadOnlyList<KeySchemaElement> keySchema,
+            IReadOnlyList<AttributeDefinition> attributes,
+            ProvisionedThroughput provisionedThroughput)
         {
             if (string.IsNullOrWhiteSpace(tableName))
                 throw new ArgumentException($"A non-null/empty table name is required.", nameof(tableName));
@@ -25,28 +29,26 @@ namespace DynamoDb.ConsoleApp.Repositories
 
             async Task createTableAsync()
             {
-                if (!await ExistsAsync(tableName))
+                if (!await IsExistingTableAsync(tableName))
                 {
                     var request = new CreateTableRequest
                     {
                         TableName = tableName,
-                        AttributeDefinitions = new List<AttributeDefinition>()
-                        {
-                            new AttributeDefinition("Id", ScalarAttributeType.S)
-                        },
-                        KeySchema = new List<KeySchemaElement>()
-                        {
-                            new KeySchemaElement("Id", KeyType.HASH)
-                        },
-                        ProvisionedThroughput = new ProvisionedThroughput(readCapacityUnits: 10, writeCapacityUnits: 5)
+                        AttributeDefinitions = attributes.ToList(),
+                        KeySchema = keySchema.ToList(),
+                        ProvisionedThroughput = provisionedThroughput
                     };
 
-                    await _amazonDb.CreateTableAsync(request);
+                    await _dynamoDb.CreateTableAsync(request);
                 }
             }
         }
 
-        public Task CreateTableAndWaitUntilTableReadyAsync(string tableName)
+        public Task CreateTableAndWaitUntilTableReadyAsync(
+            string tableName,
+            IReadOnlyList<KeySchemaElement> keySchema,
+            IReadOnlyList<AttributeDefinition> attributes,
+            ProvisionedThroughput provisionedThroughput)
         {
             if (string.IsNullOrWhiteSpace(tableName))
                 throw new ArgumentException($"A non-null/empty table name is required.", nameof(tableName));
@@ -55,7 +57,7 @@ namespace DynamoDb.ConsoleApp.Repositories
 
             async Task createTableAndWaitAsync()
             {
-                await CreateTableAsync(tableName);
+                await CreateTableAsync(tableName, keySchema, attributes, provisionedThroughput);
                 await WaitUntilTableReadyAsync(tableName);
             }
         }
@@ -63,33 +65,41 @@ namespace DynamoDb.ConsoleApp.Repositories
         /// <summary>
         /// Check every 5 seconds for 1 minute until table creation completed.
         /// </summary>
-        public async Task WaitUntilTableReadyAsync(string tableName)
+        public Task WaitUntilTableReadyAsync(string tableName)
         {
-            TableStatus status = null;
-            TimeSpan maxWaitTime = TimeSpan.FromMinutes(1);
+            if (string.IsNullOrWhiteSpace(tableName))
+                throw new ArgumentException($"A non-null/empty table name is required.", nameof(tableName));
 
-            do
+            return waitUntilTableReadyAsync();
+
+            async Task waitUntilTableReadyAsync()
             {
-                await Task.Delay(3000);
-                maxWaitTime = maxWaitTime.Subtract(TimeSpan.FromSeconds(5));
+                TableStatus status = null;
+                TimeSpan maxWaitTime = TimeSpan.FromMinutes(1);
 
-                try
+                do
                 {
-                    var response = await _amazonDb.DescribeTableAsync(new DescribeTableRequest
+                    await Task.Delay(3000);
+                    maxWaitTime = maxWaitTime.Subtract(TimeSpan.FromSeconds(5));
+
+                    try
                     {
-                        TableName = tableName
-                    });
+                        var response = await _dynamoDb.DescribeTableAsync(new DescribeTableRequest
+                        {
+                            TableName = tableName
+                        });
 
-                    Console.WriteLine($"Table name: {response.Table.TableName}, status: {response.Table.TableStatus}");
-                    status = response.Table.TableStatus;
-                }
-                catch (ResourceNotFoundException)
-                {
-                    // The table may not be created yet. This operation is eventually consistent
-                    // and for now we just ignore the exception
-                    Console.WriteLine($"Table '{tableName}' not yet created.");
-                }
-            } while (status != TableStatus.ACTIVE || maxWaitTime.TotalSeconds <= 0);
+                        Console.WriteLine($"Table name: {response.Table.TableName}, status: {response.Table.TableStatus}");
+                        status = response.Table.TableStatus;
+                    }
+                    catch (ResourceNotFoundException)
+                    {
+                        // The table may not be created yet. This operation is eventually consistent
+                        // and for now we just ignore the exception
+                        Console.WriteLine($"Table '{tableName}' not yet created.");
+                    }
+                } while (status != TableStatus.ACTIVE || maxWaitTime.TotalSeconds <= 0);
+            }
         }
 
         public Task DeleteTableAsync(string tableName)
@@ -102,27 +112,32 @@ namespace DynamoDb.ConsoleApp.Repositories
             async Task deleteTableAsync()
             {
                 if (!await ExistsAsync(tableName))
-                    throw new InvalidOperationException($"A table having name '{tableName}' does not exist.");
-                
-                await _amazonDb.DeleteTableAsync(tableName);
+                    throw new TableNotFoundException($"A table having name '{tableName}' does not exist.");
+
+                await _dynamoDb.DeleteTableAsync(tableName);
             }
         }
 
-        public Task<bool> ExistsAsync(string tableName)
+        public Task<bool> IsExistingTableAsync(string tableName)
         {
             if (string.IsNullOrWhiteSpace(tableName))
                 throw new ArgumentException($"A non-null/empty table name is required.", nameof(tableName));
 
-            return existsAsync();
-
-            async Task<bool> existsAsync()
-            {
-                var response = await _amazonDb.ListTablesAsync();
-                return tableName == response.TableNames.FirstOrDefault(t => t == tableName);
-            }
+            return ExistsAsync(tableName);
         }
 
-        public Task<TableDescription> GetTableAsync(string tableName)
+        private async Task<bool> ExistsAsync(string tableName)
+        {
+            return (await GetTableNameListAsync()).Any(tn => string.Compare(tn, tableName, true) == 0);
+        }
+
+        private async Task<IReadOnlyList<string>> FindTableNameMatchesAsync(params string[] tableNames)
+        {
+            var existingTableNames = await GetTableNameListAsync();
+            return existingTableNames.Intersect(tableNames).ToList();
+        }
+
+        public Task<TableDescription> DescribeTableAsync(string tableName)
         {
             if (string.IsNullOrWhiteSpace(tableName))
                 throw new ArgumentException($"A non-null/empty table name is required.", nameof(tableName));
@@ -134,16 +149,52 @@ namespace DynamoDb.ConsoleApp.Repositories
                 if (!await ExistsAsync(tableName))
                     return null;
 
-                var tableInfo = await _amazonDb.DescribeTableAsync(tableName);
-
-                return tableInfo.Table;
+                return (await _dynamoDb.DescribeTableAsync(tableName)).Table;
             }
         }
 
-        public async Task<IReadOnlyList<string>> GetAllTablesAsync()
+        public Task<IReadOnlyList<TableDescription>> DescribeTablesAsync(params string[] tableNames)
         {
-            var response = await _amazonDb.ListTablesAsync();
-            return response.TableNames;
+            if (tableNames == null || !tableNames.Any())
+                throw new ArgumentException($"A non-null/empty list of table names is required.", nameof(tableNames));
+
+            return getTableAsync();
+
+            async Task<IReadOnlyList<TableDescription>> getTableAsync()
+            {
+                var matchingTableNames = await FindTableNameMatchesAsync(tableNames);
+
+                if (!matchingTableNames.Any())
+                    return Enumerable.Empty<TableDescription>().ToList();
+
+                var tableDescriptions = new List<TableDescription>(matchingTableNames.Count);
+
+                foreach (var tableName in matchingTableNames)
+                    tableDescriptions.Add((await _dynamoDb.DescribeTableAsync(tableName)).Table);
+                
+                return tableDescriptions;
+            }
+        }
+
+        public async Task<IReadOnlyList<string>> GetTableNameListAsync()
+        {
+            var tableNames = new List<string>();
+            string startTableName = null;
+
+            do
+            {
+                var response = await _dynamoDb.ListTablesAsync(new ListTablesRequest
+                {
+                    ExclusiveStartTableName = startTableName,
+                    Limit = 10
+                });
+
+                tableNames.AddRange(response.TableNames);
+                startTableName = response.LastEvaluatedTableName;
+
+            } while (!string.IsNullOrWhiteSpace(startTableName));
+
+            return tableNames;
         }
 
     }

@@ -4,11 +4,11 @@ using System.Threading.Tasks;
 
 namespace DynamoDb.ConsoleApp.Repositories
 {
-    public interface IEntityRepository<T> where T : EntityBase
+    public interface IEntityRepository<T> where T : class
     {
-        Task DeleteEntityAsync(Guid entityId);
-        Task<IReadOnlyList<T>> GetAllEntitiesAsync();
-        Task<T> GetEntityByIdAsync(Guid entityId);
-        Task<Guid> SaveEntityAsync(T entity);
+        Task DeleteAsync(object hashKey);
+        Task<IReadOnlyList<T>> GetAllAsync();
+        Task<T> GetAsync(object hashKey);
+        Task SaveAsync(T entity);
     }
 }
