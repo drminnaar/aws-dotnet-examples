@@ -77,6 +77,8 @@ A collection of independent dotnet core projects written in C# that demonstrate 
         * Enqueue game ranking to queue
         * Dequeue game rankings from queue
 
+* [Lambda HelloWorld] - This is a very basic starter project and was generated using a combination of the dotnet cli tool and the _`lambda.EmptyFunction`_ template. For more information, please visit _'[Creating .NET Core AWS Lambda Projects without Visual Studio]'_.
+
 ## Versioning
 
 I use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/drminnaar/aws-dotnetcore-examples/tags).
@@ -91,3 +93,5 @@ I use [SemVer](http://semver.org/) for versioning. For the versions available, s
 [DynamoDb ConsoleApp]: https://github.com/drminnaar/aws-dotnetcore-examples/tree/master/dynamodb-console
 [SNS ConsoleApp]: https://github.com/drminnaar/aws-dotnetcore-examples/tree/master/sns-console
 [SQS ConsoleApp]: https://github.com/drminnaar/aws-dotnetcore-examples/tree/master/sqs-console
+[Lambda HelloWorld]: https://github.com/drminnaar/aws-dotnetcore-examples/tree/master/lambda/HelloWorld
+[Creating .NET Core AWS Lambda Projects without Visual Studio]: https://aws.amazon.com/blogs/developer/creating-net-core-aws-lambda-projects-without-visual-studio/
