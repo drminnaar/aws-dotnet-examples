@@ -8,7 +8,7 @@ namespace HelloWorld
     {
         public string FunctionHandler(string input, ILambdaContext context)
         {
-            return string.IsNullOrWhiteSpace(input) ? string.Empty : string.Join("-", input.ToUpper());
+            return input?.ToUpper();
         }
     }
 }
