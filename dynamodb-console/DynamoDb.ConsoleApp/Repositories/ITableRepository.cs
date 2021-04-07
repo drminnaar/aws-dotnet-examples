@@ -24,7 +24,7 @@ namespace DynamoDb.ConsoleApp.Repositories
 
          Task<IReadOnlyList<string>> GetTableNameListAsync();
 
-         Task<TableDescription> DescribeTableAsync(string tableName);
+         Task<TableDescription?> DescribeTableAsync(string tableName);
 
          Task<IReadOnlyList<TableDescription>> DescribeTablesAsync(params string[] tableNames);
 

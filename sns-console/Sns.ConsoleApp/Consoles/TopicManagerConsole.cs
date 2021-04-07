@@ -1,9 +1,9 @@
+using Sns.ConsoleApp.Services.Topics;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
-using Sns.ConsoleApp.Services.Topics;
 
 namespace Sns.ConsoleApp.Consoles
 {
@@ -60,13 +60,13 @@ namespace Sns.ConsoleApp.Consoles
             try
             {
                 Console.Write("Enter a topic name: ");
-                var topicName = Console.ReadLine();
+                var topicName = Console.ReadLine() ?? string.Empty;
 
                 Console.Write("Enter attribute name: ");
-                var attributeName = Console.ReadLine();
+                var attributeName = Console.ReadLine() ?? string.Empty;
 
                 Console.Write("Enter attribute value: ");
-                var attributeValue = Console.ReadLine();
+                var attributeValue = Console.ReadLine() ?? string.Empty;
 
                 await _topicService.CreateTopicAsync(
                     topicName,
@@ -88,13 +88,13 @@ namespace Sns.ConsoleApp.Consoles
             try
             {
                 Console.Write("Enter a topic name: ");
-                var topicName = Console.ReadLine();
+                var topicName = Console.ReadLine() ?? string.Empty;
 
                 var topic = await _topicService.GetTopicAsync(topicName);
 
                 if (topic != null)
                 {
-                    Console.WriteLine(JsonConvert.SerializeObject(topic, Formatting.Indented));
+                    Console.WriteLine(JsonSerializer.Serialize(topic, new JsonSerializerOptions { WriteIndented = true }));
                 }
             }
             catch (Exception e)
@@ -110,7 +110,7 @@ namespace Sns.ConsoleApp.Consoles
             try
             {
                 var topics = await _topicService.GetAllTopicsAsync();
-                Console.WriteLine(JsonConvert.SerializeObject(topics, Formatting.Indented));
+                Console.WriteLine(JsonSerializer.Serialize(topics, new JsonSerializerOptions { WriteIndented = true }));
             }
             catch (Exception e)
             {
@@ -125,7 +125,7 @@ namespace Sns.ConsoleApp.Consoles
             try
             {
                 Console.Write("Enter topic name: ");
-                var topicName = Console.ReadLine();
+                var topicName = Console.ReadLine() ?? string.Empty;
 
                 await _topicService.DeleteTopicAsync(topicName);
                 Console.WriteLine($"Deleted topic '{topicName}' successfully.");

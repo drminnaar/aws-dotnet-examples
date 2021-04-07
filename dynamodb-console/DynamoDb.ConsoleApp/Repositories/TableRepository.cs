@@ -74,7 +74,7 @@ namespace DynamoDb.ConsoleApp.Repositories
 
             async Task waitUntilTableReadyAsync()
             {
-                TableStatus status = null;
+                TableStatus? status = null;
                 TimeSpan maxWaitTime = TimeSpan.FromMinutes(1);
 
                 do
@@ -137,14 +137,14 @@ namespace DynamoDb.ConsoleApp.Repositories
             return existingTableNames.Intersect(tableNames).ToList();
         }
 
-        public Task<TableDescription> DescribeTableAsync(string tableName)
+        public Task<TableDescription?> DescribeTableAsync(string tableName)
         {
             if (string.IsNullOrWhiteSpace(tableName))
                 throw new ArgumentException($"A non-null/empty table name is required.", nameof(tableName));
 
             return getTableAsync();
 
-            async Task<TableDescription> getTableAsync()
+            async Task<TableDescription?> getTableAsync()
             {
                 if (!await ExistsAsync(tableName))
                     return null;
@@ -171,7 +171,7 @@ namespace DynamoDb.ConsoleApp.Repositories
 
                 foreach (var tableName in matchingTableNames)
                     tableDescriptions.Add((await _dynamoDb.DescribeTableAsync(tableName)).Table);
-                
+
                 return tableDescriptions;
             }
         }
@@ -179,7 +179,7 @@ namespace DynamoDb.ConsoleApp.Repositories
         public async Task<IReadOnlyList<string>> GetTableNameListAsync()
         {
             var tableNames = new List<string>();
-            string startTableName = null;
+            string? startTableName = null;
 
             do
             {

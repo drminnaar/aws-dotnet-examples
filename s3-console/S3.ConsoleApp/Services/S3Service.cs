@@ -1,11 +1,10 @@
+using Amazon.S3;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
-using Amazon.S3;
-using Amazon.S3.Model;
-using Microsoft.Extensions.Logging;
 
 namespace S3.ConsoleApp.Services
 {
@@ -20,14 +19,14 @@ namespace S3.ConsoleApp.Services
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
-        public Task<CreatedBucket> CreateBucketAsync(string bucketName)
+        public Task<CreatedBucket?> CreateBucketAsync(string bucketName)
         {
             if (string.IsNullOrWhiteSpace(bucketName))
                 throw new ArgumentException("A bucket name is required", nameof(bucketName));
 
             return createBucketAsync();
 
-            async Task<CreatedBucket> createBucketAsync()
+            async Task<CreatedBucket?> createBucketAsync()
             {
                 try
                 {
@@ -44,7 +43,7 @@ namespace S3.ConsoleApp.Services
                         _logger.LogWarning($"A bucket having name '{bucketName}' could not be created.");
                         return null;
                     }
-                    
+
                     return new CreatedBucket
                     {
                         Name = bucketName
@@ -58,14 +57,14 @@ namespace S3.ConsoleApp.Services
             }
         }
 
-        public Task<DeletedBucket> DeleteBucketAsync(string bucketName)
+        public Task<DeletedBucket?> DeleteBucketAsync(string bucketName)
         {
             if (string.IsNullOrWhiteSpace(bucketName))
                 throw new ArgumentException("A bucket name is required", nameof(bucketName));
 
             return removeBucketAsync();
 
-            async Task<DeletedBucket> removeBucketAsync()
+            async Task<DeletedBucket?> removeBucketAsync()
             {
                 try
                 {
@@ -82,7 +81,7 @@ namespace S3.ConsoleApp.Services
                         _logger.LogWarning($"A bucket having name '{bucketName}' could not be deleted ({response.HttpStatusCode}).");
                         return null;
                     }
-                    
+
                     return new DeletedBucket
                     {
                         Name = bucketName

@@ -5,8 +5,8 @@ namespace S3.ConsoleApp.Services
 {
     public interface IS3Service
     {
-        Task<CreatedBucket> CreateBucketAsync(string bucketName);
-        Task<DeletedBucket> DeleteBucketAsync(string bucketName);
+        Task<CreatedBucket?> CreateBucketAsync(string bucketName);
+        Task<DeletedBucket?> DeleteBucketAsync(string bucketName);
         Task<IReadOnlyList<Bucket>> ListAllBucketsAsync();
     }
 }

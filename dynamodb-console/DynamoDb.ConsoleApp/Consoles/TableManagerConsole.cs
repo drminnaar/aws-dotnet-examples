@@ -1,10 +1,10 @@
+using DynamoDb.ConsoleApp.Repositories;
+using DynamoDb.ConsoleApp.Services.Books;
 using System;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
-using DynamoDb.ConsoleApp.Repositories;
-using DynamoDb.ConsoleApp.Services.Books;
-using Newtonsoft.Json;
 
 namespace DynamoDb.ConsoleApp.Consoles
 {
@@ -82,7 +82,7 @@ namespace DynamoDb.ConsoleApp.Consoles
 
             Console.WriteLine();
             Console.ForegroundColor = ConsoleColor.DarkGreen;
-            Console.WriteLine(JsonConvert.SerializeObject(tableDescription, Formatting.Indented));
+            Console.WriteLine(JsonSerializer.Serialize(tableDescription, new JsonSerializerOptions { WriteIndented = true }));
             Console.ForegroundColor = ForegroundColor;
         }
 
@@ -93,7 +93,7 @@ namespace DynamoDb.ConsoleApp.Consoles
 
             Console.WriteLine();
             Console.ForegroundColor = ConsoleColor.DarkGreen;
-            Console.WriteLine(JsonConvert.SerializeObject(tableDescriptions, Formatting.Indented));
+            Console.WriteLine(JsonSerializer.Serialize(tableDescriptions, new JsonSerializerOptions { WriteIndented = true }));
             Console.ForegroundColor = ForegroundColor;
         }
 
@@ -117,7 +117,7 @@ namespace DynamoDb.ConsoleApp.Consoles
 
             Console.WriteLine();
             Console.ForegroundColor = ConsoleColor.DarkGreen;
-            Console.WriteLine(JsonConvert.SerializeObject(table, Formatting.Indented));
+            Console.WriteLine(JsonSerializer.Serialize(table, new JsonSerializerOptions { WriteIndented = true }));
             Console.ForegroundColor = ForegroundColor;
         }
 
@@ -127,7 +127,7 @@ namespace DynamoDb.ConsoleApp.Consoles
 
             Console.WriteLine();
             Console.ForegroundColor = ConsoleColor.DarkGreen;
-            Console.WriteLine(JsonConvert.SerializeObject(table, Formatting.Indented));
+            Console.WriteLine(JsonSerializer.Serialize(table, new JsonSerializerOptions { WriteIndented = true }));
             Console.ForegroundColor = ForegroundColor;
         }
 
@@ -137,7 +137,7 @@ namespace DynamoDb.ConsoleApp.Consoles
 
             Console.WriteLine();
             Console.ForegroundColor = ConsoleColor.DarkGreen;
-            Console.WriteLine(JsonConvert.SerializeObject(table, Formatting.Indented));
+            Console.WriteLine(JsonSerializer.Serialize(table, new JsonSerializerOptions { WriteIndented = true }));
             Console.ForegroundColor = ForegroundColor;
         }
 

@@ -1,8 +1,8 @@
+using DynamoDb.ConsoleApp.Services.Books;
 using System;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
-using DynamoDb.ConsoleApp.Services.Books;
-using Newtonsoft.Json;
 
 namespace DynamoDb.ConsoleApp.Consoles
 {
@@ -60,7 +60,7 @@ namespace DynamoDb.ConsoleApp.Consoles
 
             Console.ForegroundColor = ConsoleColor.DarkGreen;
             Console.WriteLine();
-            Console.WriteLine(JsonConvert.SerializeObject(books, Formatting.Indented));
+            Console.WriteLine(JsonSerializer.Serialize(books, new JsonSerializerOptions { WriteIndented = true }));
             Console.ForegroundColor = ForegroundColor;
         }
 
@@ -71,15 +71,17 @@ namespace DynamoDb.ConsoleApp.Consoles
 
             Console.ForegroundColor = ConsoleColor.DarkGreen;
             Console.WriteLine();
-            Console.WriteLine(JsonConvert.SerializeObject(book, Formatting.Indented));
+            Console.WriteLine(JsonSerializer.Serialize(book, new JsonSerializerOptions { WriteIndented = true }));
             Console.ForegroundColor = ForegroundColor;
-        }        
+        }
 
         private async Task AddBookAsync()
         {
-            var bookForCreate = new BookForCreate();
-            bookForCreate.Title = Prompt("Enter book title: ");
-            bookForCreate.Description = Prompt("Enter book description: ");
+            var bookForCreate = new BookForCreate
+            {
+                Title = Prompt("Enter book title: "),
+                Description = Prompt("Enter book description: ")
+            };
 
             await _booksManager.AddBookAsync(bookForCreate);
 
@@ -88,12 +90,14 @@ namespace DynamoDb.ConsoleApp.Consoles
         }
 
         private async Task UpdateBookAsync()
-        {            
+        {
             var bookId = Guid.Parse(Prompt("Enter book id: "));
 
-            var bookForUpdate = new BookForUpdate();
-            bookForUpdate.Title = Prompt("Enter book title: ");
-            bookForUpdate.Description = Prompt("Enter book description: ");            
+            var bookForUpdate = new BookForUpdate
+            {
+                Title = Prompt("Enter book title: "),
+                Description = Prompt("Enter book description: ")
+            };
 
             await _booksManager.UpdateBookAsync(bookId, bookForUpdate);
 

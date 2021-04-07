@@ -51,13 +51,13 @@ namespace Sns.ConsoleApp.Consoles
                 Console.WriteLine("\nCreate Game Rank Publication");
 
                 Console.Write("\nEnter use id: ");
-                var userId = Console.ReadLine();
+                var userId = Console.ReadLine() ?? string.Empty;
 
                 Console.Write("Enter game name: ");
-                var gameName = Console.ReadLine();
+                var gameName = Console.ReadLine() ?? string.Empty;
 
                 Console.Write("Enter game rating: ");
-                var gameRating = double.Parse(Console.ReadLine());
+                var gameRating = double.Parse(Console.ReadLine() ?? string.Empty);
 
                 var gameRank = new GameRank
                 {

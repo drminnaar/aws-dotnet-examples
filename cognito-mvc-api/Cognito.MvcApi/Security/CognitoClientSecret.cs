@@ -26,10 +26,8 @@ namespace Cognito.MvcApi.Security
 
         private static byte[] HmacSHA256(byte[] data, byte[] key)
         {
-            using (var shaAlgorithm = new HMACSHA256(key))
-            {
-                return shaAlgorithm.ComputeHash(data);
-            }
+            using var shaAlgorithm = new HMACSHA256(key);
+            return shaAlgorithm.ComputeHash(data);
         }        
     }
 }

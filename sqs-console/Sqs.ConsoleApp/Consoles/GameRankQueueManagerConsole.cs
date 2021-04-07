@@ -1,8 +1,8 @@
+using Sqs.ConsoleApp.Managers.Games;
 using System;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
-using Sqs.ConsoleApp.Managers.Games;
 
 namespace Sqs.ConsoleApp.Consoles
 {
@@ -56,16 +56,16 @@ namespace Sqs.ConsoleApp.Consoles
                 Console.WriteLine("\nEnqueue Game Rank");
 
                 Console.Write("\nEnter queue name: ");
-                var queueName = Console.ReadLine();
+                var queueName = Console.ReadLine() ?? string.Empty;
 
                 Console.Write("\nEnter use id: ");
-                var userId = Console.ReadLine();
+                var userId = Console.ReadLine() ?? string.Empty;
 
                 Console.Write("Enter game name: ");
-                var gameName = Console.ReadLine();
+                var gameName = Console.ReadLine() ?? string.Empty;
 
                 Console.Write("Enter game rating: ");
-                var gameRating = double.Parse(Console.ReadLine());
+                var gameRating = double.Parse(Console.ReadLine() ?? string.Empty);
 
                 var gameRank = new GameRank
                 {
@@ -92,10 +92,10 @@ namespace Sqs.ConsoleApp.Consoles
                 Console.WriteLine("\nDequeue Game Rankings");
 
                 Console.Write("\nEnter queue name: ");
-                var queueName = Console.ReadLine();
+                var queueName = Console.ReadLine() ?? string.Empty;
 
                 var response = await _gameRankQueueManager.DequeueGameRanksAsync(queueName);
-                Console.WriteLine(JsonConvert.SerializeObject(response));
+                Console.WriteLine(JsonSerializer.Serialize(response));
             }
             catch (Exception e)
             {

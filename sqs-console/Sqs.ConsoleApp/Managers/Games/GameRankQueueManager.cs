@@ -1,8 +1,8 @@
+using Amazon.SQS;
 using System;
 using System.Collections.Generic;
+using System.Text.Json;
 using System.Threading.Tasks;
-using Amazon.SQS;
-using Newtonsoft.Json;
 
 namespace Sqs.ConsoleApp.Managers.Games
 {
@@ -21,7 +21,7 @@ namespace Sqs.ConsoleApp.Managers.Games
 
             var sendMessageResponse = await _sqs.SendMessageAsync(
                 getUrlResponse.QueueUrl,
-                JsonConvert.SerializeObject(gameRank));
+                JsonSerializer.Serialize(gameRank));
 
             return sendMessageResponse.MessageId;
         }
@@ -32,11 +32,11 @@ namespace Sqs.ConsoleApp.Managers.Games
             var receiveMessageResponse = await _sqs.ReceiveMessageAsync(getUrlResponse.QueueUrl);
 
             var gameRankings = new List<GameRank>();
-            
+
             foreach (var message in receiveMessageResponse.Messages)
             {
                 await _sqs.DeleteMessageAsync(getUrlResponse.QueueUrl, message.ReceiptHandle);
-                gameRankings.Add(JsonConvert.DeserializeObject<GameRank>(message.Body));
+                gameRankings.Add(JsonSerializer.Deserialize<GameRank>(message.Body)!);
             }
 
             return gameRankings;

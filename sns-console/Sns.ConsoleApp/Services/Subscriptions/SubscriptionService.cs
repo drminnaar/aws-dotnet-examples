@@ -104,10 +104,9 @@ namespace Sns.ConsoleApp.Services.Subscriptions
                     TopicArn = topic.TopicArn
                 };
 
-                ListSubscriptionsByTopicResponse response = null;
-
                 var subscriptions = new List<Subscription>();
 
+                ListSubscriptionsByTopicResponse response;
                 do
                 {
                     response = await _sns.ListSubscriptionsByTopicAsync(request);

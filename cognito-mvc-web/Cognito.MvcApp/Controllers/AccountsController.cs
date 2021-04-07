@@ -64,9 +64,9 @@ namespace Cognito.MvcApp.Controllers
         }
 
         [Authorize]
-        public async Task<IActionResult> SignOut()
+        public async Task<IActionResult> Logout()
         {
-            if (User.Identity.IsAuthenticated)
+            if (User.Identity?.IsAuthenticated ?? false)
             {
                 await _signInManager.SignOutAsync();
                 return RedirectToAction(nameof(SignIn));

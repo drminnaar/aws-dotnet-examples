@@ -1,8 +1,8 @@
+using Sqs.ConsoleApp.Managers.Queues;
 using System;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
-using Sqs.ConsoleApp.Managers.Queues;
 
 namespace Sqs.ConsoleApp.Consoles
 {
@@ -58,7 +58,7 @@ namespace Sqs.ConsoleApp.Consoles
         private async Task CreateQueueAsync()
         {
             Console.Write("\nEnter queue name: ");
-            var queueName = Console.ReadLine();
+            var queueName = Console.ReadLine() ?? string.Empty;
 
             var queueUrl = await _queueManager.CreateQueueAsync(queueName);
 
@@ -68,7 +68,7 @@ namespace Sqs.ConsoleApp.Consoles
         private async Task DeleteQueueAsync()
         {
             Console.Write("\nEnter queue name: ");
-            var queueName = Console.ReadLine();
+            var queueName = Console.ReadLine() ?? string.Empty;
 
             var queueUrl = await _queueManager.DeleteQueueAsync(queueName);
             Console.WriteLine($"Deleted queue '{queueName}' at '{queueUrl}'.");
@@ -78,19 +78,19 @@ namespace Sqs.ConsoleApp.Consoles
         {
             var queues = await _queueManager.ListAllQueuesAsync();
             Console.WriteLine();
-            Console.WriteLine(JsonConvert.SerializeObject(queues));
+            Console.WriteLine(JsonSerializer.Serialize(queues));
         }
 
         private async Task GetQueueUrlAsync()
         {
             Console.Write("\nEnter queue name: ");
-            var queueName = Console.ReadLine();
+            var queueName = Console.ReadLine() ?? string.Empty;
 
             var queueUrl = await _queueManager.GetQueueUrlAsync(queueName);
-            Console.WriteLine(JsonConvert.SerializeObject(queueUrl));
+            Console.WriteLine(JsonSerializer.Serialize(queueUrl));
         }
 
-        private async Task ExecuteMenuActionAsync(Func<Task> menuAction)
+        private static async Task ExecuteMenuActionAsync(Func<Task> menuAction)
         {
             try
             {

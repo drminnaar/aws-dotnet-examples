@@ -3,12 +3,11 @@
 }
 
 @using Microsoft.AspNetCore.Identity
-@using Microsoft.AspNetCore.Identity.EntityFrameworkCore
 @using Amazon.Extensions.CognitoAuthentication
 @inject UserManager<CognitoUser> UserManager
 
 <div class="jumbotron">
-    <h1 class="display-4">Hello @User.Identity.Name!</h1>
+    <h1 class="display-4">Hello @User.Identity?.Name</h1>
     <p class="lead">You have successfully signed in using ASP.NET Core Identity and AWS Cognito</p>
     <hr class="my-4">
     <p>To learn more about Amazon Cognito, try the following links:</p>

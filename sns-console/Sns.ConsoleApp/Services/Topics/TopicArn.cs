@@ -21,14 +21,14 @@ namespace Sns.ConsoleApp.Services.Topics
             }
         }
 
-        public string AccountId { get; set; }
+        public string AccountId { get; set; } = string.Empty;
         public string Format { get; set; } = "arn:aws:sns:region:account-id:topicname";
         public string FormatWithSubscription { get; set; } = "arn:aws:sns:region:account-id:topicname:subscriptionid";
-        public string Region { get; set; }
-        public string Service { get; set; }
-        public string SubscriptionId { get; set; }
-        public string TopicName { get; set; }
-        public string OriginalTopicArn { get; }
+        public string Region { get; set; } = string.Empty;
+        public string Service { get; set; } = string.Empty;
+        public string SubscriptionId { get; set; } = string.Empty;
+        public string TopicName { get; set; } = string.Empty;
+        public string OriginalTopicArn { get; } = string.Empty;
 
         public override string ToString()
         {

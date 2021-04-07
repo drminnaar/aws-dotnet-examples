@@ -1,9 +1,9 @@
-using System;
-using System.Net;
-using System.Threading.Tasks;
 using Amazon.SimpleNotificationService;
 using Amazon.SimpleNotificationService.Model;
-using Newtonsoft.Json;
+using System;
+using System.Net;
+using System.Text.Json;
+using System.Threading.Tasks;
 
 namespace Sns.ConsoleApp.Services.Publications
 {
@@ -22,7 +22,7 @@ namespace Sns.ConsoleApp.Services.Publications
                 throw new ArgumentException($"A non-null/empty '{topicName}' is required.", nameof(topicName));
 
             if (message == null)
-                throw new ArgumentNullException($"A non-null '{message}' is required.", nameof(message));
+                throw new ArgumentNullException(nameof(message), $"A non-null '{message}' is required.");
 
             if (string.IsNullOrWhiteSpace(subject))
                 throw new ArgumentException($"A non-null/empty '{subject}' is required.", nameof(subject));
@@ -38,7 +38,7 @@ namespace Sns.ConsoleApp.Services.Publications
 
                 var request = new PublishRequest
                 {
-                    Message = JsonConvert.SerializeObject(message),
+                    Message = JsonSerializer.Serialize(message),
                     Subject = subject,
                     TopicArn = topic.TopicArn
                 };

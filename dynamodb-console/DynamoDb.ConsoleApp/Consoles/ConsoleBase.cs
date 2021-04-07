@@ -6,7 +6,7 @@ namespace DynamoDb.ConsoleApp.Consoles
     public abstract class ConsoleBase
     {
         protected ConsoleBase()
-        {            
+        {
         }
 
         protected static async Task ExecuteMenuActionAsync(Func<Task> menuAction)
@@ -27,7 +27,7 @@ namespace DynamoDb.ConsoleApp.Consoles
         protected static string Prompt(string question)
         {
             Console.Write(question);
-            return Console.ReadLine();
+            return Console.ReadLine() ?? string.Empty;
         }
     }
 }

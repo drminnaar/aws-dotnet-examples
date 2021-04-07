@@ -1,8 +1,8 @@
+using Sns.ConsoleApp.Services.Subscriptions;
 using System;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
-using Sns.ConsoleApp.Services.Subscriptions;
 
 namespace Sns.ConsoleApp.Consoles
 {
@@ -56,10 +56,10 @@ namespace Sns.ConsoleApp.Consoles
             try
             {
                 Console.Write("Enter a topic name: ");
-                var topicName = Console.ReadLine();
+                var topicName = Console.ReadLine() ?? string.Empty;
 
                 var subscriptions = await _subscriptionService.ListSubscriptionsByTopicAsync(topicName);
-                Console.WriteLine(JsonConvert.SerializeObject(subscriptions, Formatting.Indented));
+                Console.WriteLine(JsonSerializer.Serialize(subscriptions, new JsonSerializerOptions { WriteIndented = true }));
             }
             catch (Exception e)
             {
@@ -74,13 +74,13 @@ namespace Sns.ConsoleApp.Consoles
             try
             {
                 Console.Write("Enter a topic name: ");
-                var topicName = Console.ReadLine();
+                var topicName = Console.ReadLine() ?? string.Empty;
 
                 Console.Write("Enter an email: ");
-                var email = Console.ReadLine();
+                var email = Console.ReadLine() ?? string.Empty;
 
                 var subscription = await _subscriptionService.CreateEmailSubscriptionAsync(topicName, email);
-                Console.WriteLine(JsonConvert.SerializeObject(subscription, Formatting.Indented));
+                Console.WriteLine(JsonSerializer.Serialize(subscription, new JsonSerializerOptions { WriteIndented = true }));
             }
             catch (Exception e)
             {
@@ -95,10 +95,10 @@ namespace Sns.ConsoleApp.Consoles
             try
             {
                 Console.Write("Enter a subscription ARN: ");
-                var subscriptionArn = Console.ReadLine();
+                var subscriptionArn = Console.ReadLine() ?? string.Empty;
 
                 var cancellation = await _subscriptionService.CancelSubscriptionAsync(subscriptionArn);
-                Console.WriteLine(JsonConvert.SerializeObject(cancellation, Formatting.Indented));
+                Console.WriteLine(JsonSerializer.Serialize(cancellation, new JsonSerializerOptions { WriteIndented = true }));
             }
             catch (Exception e)
             {

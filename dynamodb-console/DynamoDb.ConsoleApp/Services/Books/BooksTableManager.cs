@@ -39,7 +39,7 @@ namespace DynamoDb.ConsoleApp.Services.Books
             return _tableRepository.DeleteTableAsync(TableName);
         }
 
-        public Task<TableDescription> DescribeBooksTableAsync()
+        public Task<TableDescription?> DescribeBooksTableAsync()
         {
             return _tableRepository.DescribeTableAsync(TableName);
         }

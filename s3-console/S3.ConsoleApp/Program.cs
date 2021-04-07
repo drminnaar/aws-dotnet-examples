@@ -1,13 +1,13 @@
-﻿using System;
-using System.IO;
-using System.Text;
-using System.Threading.Tasks;
-using Amazon.S3;
+﻿using Amazon.S3;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
 using S3.ConsoleApp.Services;
+using System;
+using System.IO;
+using System.Text;
+using System.Text.Json;
+using System.Threading.Tasks;
 
 namespace S3.ConsoleApp
 {
@@ -17,7 +17,7 @@ namespace S3.ConsoleApp
         {
         }
 
-        internal async static Task Main(string[] args)
+        internal async static Task Main()
         {
             var configuration = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
@@ -47,7 +47,7 @@ namespace S3.ConsoleApp
             {
                 Console.WriteLine();
                 Console.WriteLine(getOptions());
-                var selection = Console.ReadLine();
+                var selection = Console.ReadLine() ?? string.Empty;
 
                 if (selection == "q")
                 {
@@ -59,29 +59,29 @@ namespace S3.ConsoleApp
                     if (buckets != null)
                     {
                         Console.ForegroundColor = ConsoleColor.Cyan;
-                        Console.WriteLine(JsonConvert.SerializeObject(buckets, Formatting.Indented));
+                        Console.WriteLine(JsonSerializer.Serialize(buckets, new JsonSerializerOptions { WriteIndented = true }));
                     }
                 }
                 else if (selection == "mb")
                 {
                     Console.Write("Enter bucket name: ");
-                    var bucketName = Console.ReadLine();
+                    var bucketName = Console.ReadLine() ?? string.Empty;
                     var createdBucket = await client.CreateBucketAsync(bucketName);
                     if (createdBucket != null)
                     {
                         Console.ForegroundColor = ConsoleColor.Cyan;
-                        Console.WriteLine(JsonConvert.SerializeObject(createdBucket, Formatting.Indented));
+                        Console.WriteLine(JsonSerializer.Serialize(createdBucket, new JsonSerializerOptions { WriteIndented = true }));
                     }
                 }
                 else if (selection == "rb")
                 {
                     Console.Write("Enter bucket name: ");
-                    var bucketName = Console.ReadLine();
+                    var bucketName = Console.ReadLine() ?? string.Empty;
                     var deletedBucket = await client.DeleteBucketAsync(bucketName);
                     if (deletedBucket != null)
                     {
                         Console.ForegroundColor = ConsoleColor.Red;
-                        Console.WriteLine(JsonConvert.SerializeObject(deletedBucket, Formatting.Indented));
+                        Console.WriteLine(JsonSerializer.Serialize(deletedBucket, new JsonSerializerOptions { WriteIndented = true }));
                     }
                 }
 
@@ -89,7 +89,7 @@ namespace S3.ConsoleApp
 
             } while (true);
 
-            string getOptions()
+            static string getOptions()
             {
                 var options = new StringBuilder();
                 options.AppendLine("q - Quit");

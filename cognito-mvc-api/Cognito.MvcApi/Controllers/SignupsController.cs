@@ -30,6 +30,9 @@ namespace Cognito.MvcApi.Controllers
         [HttpPost]
         public async Task<IActionResult> SignupAsync(Signup signup)
         {
+            if (signup is null)
+                throw new ArgumentNullException(nameof(signup));
+
             var request = new SignUpRequest
             {
                 ClientId = _options.UserPoolClientId,
@@ -40,7 +43,7 @@ namespace Cognito.MvcApi.Controllers
 
             try
             {
-                await _identityProvider.SignUpAsync(request);
+                await _identityProvider.SignUpAsync(request).ConfigureAwait(true);
             }
             catch (UsernameExistsException)
             {

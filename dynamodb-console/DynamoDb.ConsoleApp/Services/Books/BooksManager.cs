@@ -60,13 +60,13 @@ namespace DynamoDb.ConsoleApp.Services.Books
                 var book = await _repository.GetAsync(bookId.ToString());
 
                 if (book == null)
-                    throw new InvalidOperationException($"A book having id '{book.Id}' could not be found.");
+                    throw new InvalidOperationException($"A book having id '{bookId}' could not be found.");
 
                 book.Title = bookForUpdate.Title;
                 book.Description = bookForUpdate.Description;
 
                 await _repository.SaveAsync(book);
             }
-        }   
+        }
     }
 }

@@ -7,7 +7,7 @@ namespace DynamoDb.ConsoleApp.Services.Books
     {
          Task CreateBooksTableAsync();
          Task DeleteBooksTableAsync();
-         Task<TableDescription> DescribeBooksTableAsync();
+         Task<TableDescription?> DescribeBooksTableAsync();
          Task WaitUntilBooksTableReadyAsync();
     }
 }

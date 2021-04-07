@@ -17,7 +17,7 @@ namespace Sns.ConsoleApp.Services.Topics
             _sns = sns ?? throw new ArgumentNullException(nameof(sns));
         }
 
-        public Task<string> CreateTopicAsync(string topicName, IDictionary<string, string> attributes = null)
+        public Task<string> CreateTopicAsync(string topicName, IDictionary<string, string>? attributes = null)
         {
             if (string.IsNullOrWhiteSpace(topicName))
                 throw new ArgumentException($"A non-null/empty '{topicName}' is required.", nameof(topicName));
@@ -59,7 +59,7 @@ namespace Sns.ConsoleApp.Services.Topics
                 throw new ArgumentException($"A non-null/empty '{topicName}' is required.", nameof(topicName));
 
             return deleteTopicAsync();
-            
+
             async Task deleteTopicAsync()
             {
                 var topic = await _sns.FindTopicAsync(topicName);
@@ -78,8 +78,7 @@ namespace Sns.ConsoleApp.Services.Topics
         {
             var topics = new List<TopicDetail>();
             var request = new ListTopicsRequest();
-            ListTopicsResponse response = null;
-
+            ListTopicsResponse response;
             do
             {
                 response = await _sns.ListTopicsAsync(request);
@@ -106,19 +105,19 @@ namespace Sns.ConsoleApp.Services.Topics
             return topics;
         }
 
-        public Task<TopicDetail> GetTopicAsync(string topicName)
+        public Task<TopicDetail?> GetTopicAsync(string topicName)
         {
             if (string.IsNullOrWhiteSpace(topicName))
                 throw new ArgumentException($"A non-null/empty '{topicName}' is required.", nameof(topicName));
 
             return getTopicAsync();
 
-            async Task<TopicDetail> getTopicAsync()
+            async Task<TopicDetail?> getTopicAsync()
             {
                 var topic = await _sns.FindTopicAsync(topicName);
 
                 if (topic == null)
-                    return null;
+                    return default;
 
                 var topicArn = new TopicArn(topic.TopicArn);
 
