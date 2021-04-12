@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
@@ -7,6 +7,7 @@
     <WarningsAsErrors />
     <LangVersion>latest</LangVersion>
     <AnalysisMode>Default</AnalysisMode>
+    <UserSecretsId>ab121ce2-9ef6-421b-b719-e5b08ca88171</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>

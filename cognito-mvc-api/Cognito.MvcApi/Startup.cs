@@ -58,7 +58,10 @@ namespace Cognito.MvcApi
             {
                 setup.AddPolicy("OpenSeason", policy =>
                 {
-                    policy.AllowAnyMethod().AllowAnyOrigin();
+                    policy
+                        .AllowAnyMethod()
+                        .AllowAnyOrigin()
+                        .AllowAnyHeader();
                 });
             });
         }

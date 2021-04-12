@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Amazon.AspNetCore.Identity.Cognito.Extensions;
 using Amazon.CognitoIdentityProvider;
@@ -38,6 +39,10 @@ namespace Cognito.MvcApi.Controllers
                 ClientId = _options.UserPoolClientId,
                 Password = signup.Password,
                 SecretHash = _clientSecret.ComputeHash(signup.Email),
+                UserAttributes = new List<AttributeType>
+                {
+                    new AttributeType { Name = "email", Value = signup.Email}
+                },
                 Username = signup.Email
             };
 

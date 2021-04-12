@@ -5,8 +5,8 @@ User-Agent: rest-client
 Content-Type: application/json
 
 {
-    "Email": "xxx",
-    "Password": "yyy",
+    "Email": "sally@example.com",
+    "Password": "password",
 }
 
 ### Get Token using valid credentials
@@ -16,6 +16,6 @@ User-Agent: rest-client
 Content-Type: application/json
 
 {
-    "Email": "<<enter_your_email_address_here",
-    "Password": "<<enter_your_password_here>>"
+    "Email": "bob@example.com",
+    "Password": "password"
 }

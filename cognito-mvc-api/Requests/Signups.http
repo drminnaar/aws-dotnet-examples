@@ -5,9 +5,9 @@ User-Agent: rest-client
 Content-Type: application/json
 
 {
-    "Email": "xxx",
-    "Password": "yyy",
-    "ConfirmedPassword": "zzz"
+    "Email": "sally@example.com",
+    "Password": "password",
+    "ConfirmedPassword": "password1"
 }
 
 ### Create signup using valid details
@@ -17,7 +17,7 @@ User-Agent: rest-client
 Content-Type: application/json
 
 {
-    "Email": "<<enter_your_email_address_here",
-    "Password": "<<enter_your_password_here>>",
-    "ConfirmedPassword": "<<enter_your_password_here>>"
+    "Email": "bob@example.com",
+    "Password": "password",
+    "ConfirmedPassword": "password"
 }
