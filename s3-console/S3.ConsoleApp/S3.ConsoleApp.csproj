@@ -7,6 +7,7 @@
     <WarningsAsErrors />
     <LangVersion>latest</LangVersion>
     <AnalysisMode>Default</AnalysisMode>
+    <UserSecretsId>7ee697bc-ff15-4dfe-8248-0fbdca328ad8</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -20,5 +21,11 @@
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="5.0.0" />
     <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="5.0.0" />
     <PackageReference Include="Json.Net" Version="1.0.25" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="appSettings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 </Project>

@@ -25,6 +25,5 @@ namespace S3.ConsoleApp.Services
         {
             return new Bucket(s3Bucket);
         }
-
     }
 }
