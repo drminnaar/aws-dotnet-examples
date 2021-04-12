@@ -1,4 +1,6 @@
-# S3 ConsoleApp README
+![aws-s3-dotnet-github](https://user-images.githubusercontent.com/33935506/114361342-23210e00-9bca-11eb-8fc6-5886472060f5.png)
+
+# S3 README
 
 This project demonstrates how to integrate a .NET5 Console application with Amazon S3 using the Amazon SDK.
 
