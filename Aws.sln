@@ -4,26 +4,44 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 16.6.30114.105
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "cognito-mvc-api", "cognito-mvc-api", "{7C6A1E2D-A963-4F6F-8F1E-8C729A78FD9C}"
+	ProjectSection(SolutionItems) = preProject
+		cognito-mvc-api\README.md = cognito-mvc-api\README.md
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cognito.MvcApi", "cognito-mvc-api\Cognito.MvcApi\Cognito.MvcApi.csproj", "{44111872-0060-4B25-9493-67784E2DE122}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "cognito-mvc-web", "cognito-mvc-web", "{B056EC4F-5712-4CC4-8EE5-EC5AA642F227}"
+	ProjectSection(SolutionItems) = preProject
+		cognito-mvc-web\README.md = cognito-mvc-web\README.md
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cognito.MvcApp", "cognito-mvc-web\Cognito.MvcApp\Cognito.MvcApp.csproj", "{891D54E8-2242-4227-97A4-69C95D593D7C}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "dynamodb-console", "dynamodb-console", "{3C797964-9707-42D4-81BE-F51029ABF0CE}"
+	ProjectSection(SolutionItems) = preProject
+		dynamodb-console\README.md = dynamodb-console\README.md
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DynamoDb.ConsoleApp", "dynamodb-console\DynamoDb.ConsoleApp\DynamoDb.ConsoleApp.csproj", "{F18C0ADA-72C3-49FD-BEC2-DAF425530C58}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "s3-console", "s3-console", "{4D6804DF-F1A0-4ED6-A796-D78E28A4A920}"
+	ProjectSection(SolutionItems) = preProject
+		s3-console\README.md = s3-console\README.md
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "S3.ConsoleApp", "s3-console\S3.ConsoleApp\S3.ConsoleApp.csproj", "{15352B38-AF78-49C6-A034-3BD3FC875200}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "sns-console", "sns-console", "{39DE7ED5-2961-4C6B-9D61-3FA6C8EE64A8}"
+	ProjectSection(SolutionItems) = preProject
+		sns-console\README.md = sns-console\README.md
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sns.ConsoleApp", "sns-console\Sns.ConsoleApp\Sns.ConsoleApp.csproj", "{00322D78-C13C-42E9-868C-C1585B0CA52B}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "sqs-console", "sqs-console", "{7010D583-F73B-4445-9F5F-E3958A432CC9}"
+	ProjectSection(SolutionItems) = preProject
+		sqs-console\README.md = sqs-console\README.md
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sqs.ConsoleApp", "sqs-console\Sqs.ConsoleApp\Sqs.ConsoleApp.csproj", "{4456170A-75B8-411D-9070-FB3F79815813}"
 EndProject
