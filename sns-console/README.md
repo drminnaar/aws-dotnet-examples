@@ -10,6 +10,13 @@ This project demonstrates how to integrate a .NET Core console application with 
   * Setup application dependencies
 * Learn what the Amazon SDK Nuget packages are required to integrate with SNS
 
+Contents:
+
+* [Feature Overview](#feature-overview)
+* [Feature Walkthrough](#feature-walkthrough)
+* [Getting Started](#getting-started)
+* [Notable Nuget Packages](#notable-nuget-packages)
+
 ---
 
 ## Feature Overview
@@ -19,54 +26,15 @@ This application provides the functionality required to manage SNS topics, subsc
 The following features have been implemented:
 
 * [Manage Topics](#manage-topics)
-  * Create topic
-  * List and find topics  
-  * Delete topic
-* [Manage Subscriptions](manage-subscriptions)
-  * Create an email subscription
-  * Cancel a subscription
-  * List subscriptions
+  * [Create Topic](#create-topic)
+  * [List Topics](#list-topics)
+  * [Delete Topic](#delete-topic)
+* [Manage Subscriptions](#manage-subscriptions)
+  * [Create Email Subscription](#create-email-subscription)
+  * [Cancel Subscription](#cancel-subscription)
+  * [List Subscriptions](#list-subscriptions)
 * [Manage Publications](#manage-publications)
-  * An example showing how to publish a 'Game Ranking' to a 'game-ranking' topic
-
----
-
-## Getting Started
-
-### Configure User Secrets
-
-```powershell
-# change directory to Sns.ConsoleApp
-cd ./Sns.ConsoleApp
-
-# initialize user secrets
-dotnet user-secrets init
-
-# add AWS configuration options to user secrets
-dotnet user-secrets set "AWS:Profile" "<YOUR_CHOSEN_PROFILE_NAME>"
-dotnet user-secrets set "AWS:Region" "<YOUR_CHOSEN_REGION_NAME>"
-
-# verify that secrets were added correctly and successfully
-dotnet user-secrets list
-
-AWS:Region = <YOUR_CHOSEN_REGION_NAME>
-AWS:Profile = <YOUR_CHOSEN_PROFILE_NAME>
-
-# clear secrets if you no longer need them
-dotnet user-secrets clear
-```
-
-### Start Application
-
-```powershell
-# change directory to S3.ConsoleApp
-cd ./S3.ConsoleApp
-
-# run app
-dotnet run
-```
-
-![aws-sns-demo](https://user-images.githubusercontent.com/33935506/114331020-32d32f00-9b97-11eb-8041-3a9a923df51b.png)
+  * [Publish Game Ranking](#publish-game-ranking)
 
 ---
 
@@ -425,6 +393,45 @@ public Task<PublishConfirmation> PublishMessageAsync(string topicName, T message
     }
 }
 ```
+
+---
+
+## Getting Started
+
+### Configure User Secrets
+
+```powershell
+# change directory to Sns.ConsoleApp
+cd ./Sns.ConsoleApp
+
+# initialize user secrets
+dotnet user-secrets init
+
+# add AWS configuration options to user secrets
+dotnet user-secrets set "AWS:Profile" "<YOUR_CHOSEN_PROFILE_NAME>"
+dotnet user-secrets set "AWS:Region" "<YOUR_CHOSEN_REGION_NAME>"
+
+# verify that secrets were added correctly and successfully
+dotnet user-secrets list
+
+AWS:Region = <YOUR_CHOSEN_REGION_NAME>
+AWS:Profile = <YOUR_CHOSEN_PROFILE_NAME>
+
+# clear secrets if you no longer need them
+dotnet user-secrets clear
+```
+
+### Start Application
+
+```powershell
+# change directory to Sns.ConsoleApp
+cd ./Sns.ConsoleApp
+
+# run app
+dotnet run
+```
+
+![aws-sns-demo](https://user-images.githubusercontent.com/33935506/114331020-32d32f00-9b97-11eb-8041-3a9a923df51b.png)
 
 ---
 
