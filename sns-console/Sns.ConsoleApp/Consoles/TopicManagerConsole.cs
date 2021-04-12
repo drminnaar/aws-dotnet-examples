@@ -68,12 +68,15 @@ namespace Sns.ConsoleApp.Consoles
                 Console.Write("Enter attribute value: ");
                 var attributeValue = Console.ReadLine() ?? string.Empty;
 
-                await _topicService.CreateTopicAsync(
-                    topicName,
-                    new Dictionary<string, string>()
-                    {
-                        { attributeName, attributeValue }
-                    });
+                var attributes = string.IsNullOrWhiteSpace(attributeName) || string.IsNullOrWhiteSpace(attributeValue)
+                    ? null
+                    : new Dictionary<string, string>()
+                        {
+                            { attributeName, attributeValue }
+                        };
+
+                var topicArn = await _topicService.CreateTopicAsync(topicName, attributes);
+                Console.WriteLine($"\nTopicARN: {topicArn}");
             }
             catch (Exception e)
             {

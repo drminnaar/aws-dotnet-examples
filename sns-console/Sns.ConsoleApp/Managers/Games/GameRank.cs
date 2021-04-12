@@ -1,5 +1,3 @@
-using System;
-
 namespace Sns.ConsoleApp.Managers.Games
 {
     public sealed class GameRank
