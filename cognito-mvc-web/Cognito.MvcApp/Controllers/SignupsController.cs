@@ -45,6 +45,7 @@ namespace Cognito.MvcApp.Controllers
             }
 
             cognitoUser.Attributes.Add(CognitoAttribute.Name.AttributeName, signup.Name);
+            cognitoUser.Attributes.Add(CognitoAttribute.Email.AttributeName, signup.Email);
 
             var identityResult = await _userManager.CreateAsync(cognitoUser, signup.Password);
 
@@ -81,15 +82,8 @@ namespace Cognito.MvcApp.Controllers
                 return View(confirmation);
             }
 
-            // TODO: Log issue on Github
-            // The following commented out code throws an exception in the AWS SDK. It seems related to
-            // the user not having session tokens (not authenticated). But we can't authenticate a user until we
-            // have confirmed the user.
-            // var confirmationResult = await _userManager.ConfirmEmailAsync(user, confirmation.Code);
-
-            // The following code can be used as a workaround to the aforementioned issue
             var confirmationResult = await ((CognitoUserManager<CognitoUser>)_userManager)
-                .ConfirmSignUpAsync(user, confirmation.Code, true);            
+                .ConfirmSignUpAsync(user, confirmation.Code, true);
 
             if (!confirmationResult.Succeeded)
             {

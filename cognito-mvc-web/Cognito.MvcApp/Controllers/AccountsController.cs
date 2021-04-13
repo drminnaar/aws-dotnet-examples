@@ -64,7 +64,7 @@ namespace Cognito.MvcApp.Controllers
         }
 
         [Authorize]
-        public async Task<IActionResult> Logout()
+        public async Task<IActionResult> LogOut()
         {
             if (User.Identity?.IsAuthenticated ?? false)
             {
