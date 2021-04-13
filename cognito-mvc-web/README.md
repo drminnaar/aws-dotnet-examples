@@ -1,4 +1,6 @@
-# Cognito MVC README
+![aws-cognito-dotnet-github](https://user-images.githubusercontent.com/33935506/114387401-7dc86300-9be6-11eb-8ab6-f8d843de20cc.png)
+
+# Cognito MVC Web App README
 
 This project demonstrates how to integrate an [ASP.NET Core] MVC web application with AWS Cognito using the Amazon SDK. The [ASP.NET Core] MVC web application uses [Amazon Cognito] as an identity provider.
 
