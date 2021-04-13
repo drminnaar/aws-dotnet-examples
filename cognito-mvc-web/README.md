@@ -4,6 +4,19 @@
 
 This project demonstrates how to integrate an [ASP.NET Core] MVC web application with AWS Cognito using the Amazon SDK. The [ASP.NET Core] MVC web application uses [Amazon Cognito] as an identity provider.
 
+Contents:
+
+* [Getting Started](#getting-started)
+  * [Configure Cognito User Pool](#configure-cognito-user-pool)
+  * [Configure User Secrets](#configure-user-secrets)
+  * [Start Application](#start-application)
+  * [Signup User](#signup-user)
+  * [Verify User](#verify-user)
+  * [Signin](#signin)
+* [Feature Overview](#feature-overview)
+* [Feature Walkthrough](#feature-walkthrough)
+* [Notable Nuget Packages](#notable-nuget-packages)
+
 ## Getting Started
 
 ### Configure Cognito User Pool
