@@ -28,6 +28,6 @@ namespace Cognito.MvcApi.Security
         {
             using var shaAlgorithm = new HMACSHA256(key);
             return shaAlgorithm.ComputeHash(data);
-        }        
+        }
     }
 }

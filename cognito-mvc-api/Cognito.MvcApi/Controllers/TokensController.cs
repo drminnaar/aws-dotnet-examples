@@ -44,7 +44,7 @@ namespace Cognito.MvcApi.Controllers
             request.AuthParameters.Add("SECRET_HASH", _clientSecret.ComputeHash(credential.Email));
 
             string accessToken;
-            
+
             try
             {
                 var response = await _identityProvider.AdminInitiateAuthAsync(request);
@@ -59,6 +59,6 @@ namespace Cognito.MvcApi.Controllers
             return accessToken;
         }
 
-        
+
     }
 }
