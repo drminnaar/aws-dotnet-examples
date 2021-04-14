@@ -1,4 +1,4 @@
-![](https://repository-images.githubusercontent.com/190967041/5bfaad80-9b0c-11eb-90ab-c0df5517524c)
+![aws-dotnet-examples-github](https://user-images.githubusercontent.com/33935506/114672166-f0595000-9d58-11eb-8240-65c0b06493b5.png)
 
 # AWS for .NET Developers
 
