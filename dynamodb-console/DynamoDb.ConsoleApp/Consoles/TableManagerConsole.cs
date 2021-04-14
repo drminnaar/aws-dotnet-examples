@@ -133,11 +133,11 @@ namespace DynamoDb.ConsoleApp.Consoles
 
         private async Task DeleteBooksTableAsync()
         {
-            var table = await _booksTableManager.DescribeBooksTableAsync();
+            await _booksTableManager.DeleteBooksTableAsync();
 
             Console.WriteLine();
             Console.ForegroundColor = ConsoleColor.DarkGreen;
-            Console.WriteLine(JsonSerializer.Serialize(table, new JsonSerializerOptions { WriteIndented = true }));
+            Console.WriteLine("Books Table Deleted");
             Console.ForegroundColor = ForegroundColor;
         }
 

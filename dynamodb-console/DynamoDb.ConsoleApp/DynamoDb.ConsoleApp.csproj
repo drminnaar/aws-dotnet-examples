@@ -8,6 +8,7 @@
     <WarningsAsErrors />
     <LangVersion>latest</LangVersion>
     <AnalysisMode>Default</AnalysisMode>
+    <UserSecretsId>7ee697bc-ff15-4dfe-8248-0fbdca328ad8</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>

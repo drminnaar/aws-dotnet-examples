@@ -31,6 +31,7 @@ All projects have been built or tested on *Windows 10* and *Ubuntu 20.04*. The f
 * [Amazon SNS] - Amazon Simple Notification Service (Amazon SNS) is a web service that coordinates and manages the delivery or sending of messages to subscribing endpoints or clients.
 * [Amazon SQS] - Amazon Simple Queue Service (SQS) is a fully managed message queuing service that enables you to decouple and scale microservices, distributed systems, and serverless applications.
 * [Amazon Cognito] - Amazon Simple Notification Service (Amazon SNS) is a web service that coordinates and manages the delivery or sending of messages to subscribing endpoints or clients.
+* [Amazon DynamoDb] - Amazon DynamoDB is a fully managed NoSQL database service that provides fast and predictable performance with seamless scalability.
 * [.NET5] - .NET5 is a free and open-source managed software framework for Linux, Windows and macOS.
 * [C#] - A multi-paradigm programming language encompassing strong typing, imperative, declarative, functional, generic, object-oriented (class-based), and component-oriented programming disciplines.
 
@@ -447,3 +448,4 @@ I use [SemVer](http://semver.org/) for versioning. For the versions available, s
 [Amazon SNS]: https://docs.aws.amazon.com/sns/latest/dg/welcome.html
 [Amazon SQS]: https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/welcome.html
 [Amazon Cognito]: https://aws.amazon.com/cognito/getting-started/
+[Amazon DynamoDb]: https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Introduction.html

@@ -23,7 +23,7 @@ namespace DynamoDb.ConsoleApp.Repositories
             ProvisionedThroughput provisionedThroughput)
         {
             if (string.IsNullOrWhiteSpace(tableName))
-                throw new ArgumentException($"A non-null/empty table name is required.", nameof(tableName));
+                throw new ArgumentException("Table name is required.", nameof(tableName));
 
             return createTableAsync();
 
@@ -51,7 +51,7 @@ namespace DynamoDb.ConsoleApp.Repositories
             ProvisionedThroughput provisionedThroughput)
         {
             if (string.IsNullOrWhiteSpace(tableName))
-                throw new ArgumentException($"A non-null/empty table name is required.", nameof(tableName));
+                throw new ArgumentException($"Table name is required.", nameof(tableName));
 
             return createTableAndWaitAsync();
 
@@ -68,7 +68,7 @@ namespace DynamoDb.ConsoleApp.Repositories
         public Task WaitUntilTableReadyAsync(string tableName)
         {
             if (string.IsNullOrWhiteSpace(tableName))
-                throw new ArgumentException($"A non-null/empty table name is required.", nameof(tableName));
+                throw new ArgumentException($"Table name is required.", nameof(tableName));
 
             return waitUntilTableReadyAsync();
 
@@ -105,7 +105,7 @@ namespace DynamoDb.ConsoleApp.Repositories
         public Task DeleteTableAsync(string tableName)
         {
             if (string.IsNullOrWhiteSpace(tableName))
-                throw new ArgumentException($"A non-null/empty table name is required.", nameof(tableName));
+                throw new ArgumentException($"Table name is required.", nameof(tableName));
 
             return deleteTableAsync();
 
@@ -121,7 +121,7 @@ namespace DynamoDb.ConsoleApp.Repositories
         public Task<bool> IsExistingTableAsync(string tableName)
         {
             if (string.IsNullOrWhiteSpace(tableName))
-                throw new ArgumentException($"A non-null/empty table name is required.", nameof(tableName));
+                throw new ArgumentException($"Table name is required.", nameof(tableName));
 
             return ExistsAsync(tableName);
         }
@@ -140,7 +140,7 @@ namespace DynamoDb.ConsoleApp.Repositories
         public Task<TableDescription?> DescribeTableAsync(string tableName)
         {
             if (string.IsNullOrWhiteSpace(tableName))
-                throw new ArgumentException($"A non-null/empty table name is required.", nameof(tableName));
+                throw new ArgumentException($"Table name is required.", nameof(tableName));
 
             return getTableAsync();
 
@@ -156,7 +156,7 @@ namespace DynamoDb.ConsoleApp.Repositories
         public Task<IReadOnlyList<TableDescription>> DescribeTablesAsync(params string[] tableNames)
         {
             if (tableNames == null || !tableNames.Any())
-                throw new ArgumentException($"A non-null/empty list of table names is required.", nameof(tableNames));
+                throw new ArgumentException($"A list of table names is required.", nameof(tableNames));
 
             return getTableAsync();
 
@@ -196,6 +196,5 @@ namespace DynamoDb.ConsoleApp.Repositories
 
             return tableNames;
         }
-
     }
 }
