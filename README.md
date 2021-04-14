@@ -2,9 +2,10 @@
 
 # AWS for .NET Developers
 
-A collection of independent .NET projects written in C# .NET 5 that demonstrate how to integrate with various AWS services using the AWS SDK for dotnet.
+This project is a collection of independent .NET projects written in C# .NET 5 that demonstrate how to integrate with various AWS services using the AWS SDK for dotnet.
 
 * [Toolchain](#toolchain)
+* [AWS Services](#aws-services)
 * [Projects](#projects)
 * [AWS CLI](#aws-cli)
   * [Installing AWS CLI](#installing-aws-cli)
@@ -27,13 +28,40 @@ All projects have been built or tested on *Windows 10* and *Ubuntu 20.04*. The f
 
 * [Visual Studio Code] - Visual Studio Code is a source-code editor developed by Microsoft for Windows, Linux and macOS.
 * [Ubuntu 20.04] - Ubuntu is an open source software operating system that runs from the desktop, to the cloud, to all your internet connected things.
-* [Amazon S3] - An AWS service that provides authentication, authorization, and user management for your web and mobile apps.
-* [Amazon SNS] - Amazon Simple Notification Service (Amazon SNS) is a web service that coordinates and manages the delivery or sending of messages to subscribing endpoints or clients.
-* [Amazon SQS] - Amazon Simple Queue Service (SQS) is a fully managed message queuing service that enables you to decouple and scale microservices, distributed systems, and serverless applications.
-* [Amazon Cognito] - Amazon Simple Notification Service (Amazon SNS) is a web service that coordinates and manages the delivery or sending of messages to subscribing endpoints or clients.
-* [Amazon DynamoDb] - Amazon DynamoDB is a fully managed NoSQL database service that provides fast and predictable performance with seamless scalability.
 * [.NET5] - .NET5 is a free and open-source managed software framework for Linux, Windows and macOS.
 * [C#] - A multi-paradigm programming language encompassing strong typing, imperative, declarative, functional, generic, object-oriented (class-based), and component-oriented programming disciplines.
+
+---
+
+## AWS Services And Projects Summary
+
+So far, projects have been created for the following AWS Services:
+
+* [Amazon S3] - An AWS service that provides authentication, authorization, and user management for your web and mobile apps.
+  * [S3 ConsoleApp] - Console Application
+
+    ![aws-s3-demo](https://user-images.githubusercontent.com/33935506/114326429-da953080-9b88-11eb-8ef0-aa4c1ec554bf.png)
+
+* [Amazon SNS] - Amazon Simple Notification Service (Amazon SNS) is a web service that coordinates and manages the delivery or sending of messages to subscribing endpoints or clients.
+  * [SNS ConsoleApp] - Console Application
+
+    ![aws-sns-demo](https://user-images.githubusercontent.com/33935506/114331020-32d32f00-9b97-11eb-8041-3a9a923df51b.png)
+
+* [Amazon SQS] - Amazon Simple Queue Service (SQS) is a fully managed message queuing service that enables you to decouple and scale microservices, distributed systems, and serverless applications.
+  * [SQS ConsoleApp] - Console Application
+
+    ![aws-sqs-overview](https://user-images.githubusercontent.com/33935506/114371324-7c8e3a80-9bd4-11eb-8e8d-5d4a126c9d2e.png)
+
+* [Amazon Cognito] - Amazon Simple Notification Service (Amazon SNS) is a web service that coordinates and manages the delivery or sending of messages to subscribing endpoints or clients.
+  * [Cognito Mvc] - ASP.NET Core MVC Application
+
+    ![cognito-signup-3](https://user-images.githubusercontent.com/33935506/114539975-20491a80-9ca9-11eb-8b68-95c45f879519.png)
+
+  * [Cognito Api] - ASP.NET Core WebAPI Application
+* [Amazon DynamoDb] - Amazon DynamoDB is a fully managed NoSQL database service that provides fast and predictable performance with seamless scalability.
+  * [DynamoDb ConsoleApp] - Console Application
+
+    ![dynamodb-1](https://user-images.githubusercontent.com/33935506/114658257-a2871c80-9d45-11eb-9024-d5acde7d266e.png)
 
 ---
 
@@ -194,10 +222,6 @@ It is also considered bad practice to store any AWS configuration in the applica
 
 This approach is not considered the best approach as it uses an application configuration file that can be committed to source control with sensitive credentials.
 
-> **NOTE**
->
-> This is the current approach for all projects, but will be changed to use "user secrets" in the future
-
 Add the following configuration section to your `appsettings.json` file:
 
 ```javascript
@@ -243,7 +267,7 @@ set AWS_REGION=us-east-1
 
 > **NOTE**
 >
-> This is the approach that will be used for all projects in the future.
+> This is the approach being used for all projects in this project
 
 Working with user secrets involves using the _Secret Manager_ tool. According to the official Microsoft documentation:
 
