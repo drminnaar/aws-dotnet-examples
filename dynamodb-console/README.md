@@ -1,3 +1,5 @@
+![aws-dynamodb-dotnet-github](https://user-images.githubusercontent.com/33935506/114673001-dd934b00-9d59-11eb-9f4d-3ce7544987a4.png)
+
 # DynamoDb Console Application README
 
 This project demonstrates how to integrate a .NET Core console application with DynamoDb using the Amazon SDK.
